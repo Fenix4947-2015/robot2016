@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,6 +27,8 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser autonomousChooser = new SendableChooser();
 
+    public static USBCamera camera;
+    
     public static OI oi = new OI();
 
     public static DriveTrain driveTrain = new DriveTrain();
@@ -38,6 +41,11 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
+        camera = new USBCamera("cam0");
+        camera.setExposureManual(5);
+        camera.setBrightness(5);
+        camera.startCapture();
+    	
         // Instantiate the command used for the autonomous period
         autonomousChooser.addDefault("DoNothing", new DoNothing());
         //autonomousChooser.addObject("AutonomousSimple", new AutonomousSimple());
@@ -48,6 +56,15 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(intake);
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(climber);
+    }
+    
+    /**
+     * This function is called when the disabled button is hit.
+     * You can use it to reset subsystems before shutting down.
+     */
+    public void disabledInit() {
+    	camera.stopCapture();
+        camera.closeCamera();
     }
 
     public void disabledPeriodic() {
