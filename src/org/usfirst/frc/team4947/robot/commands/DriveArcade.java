@@ -51,7 +51,7 @@ public class DriveArcade extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	// Stop the robot when interrupted
-    	Robot.driveTrain.tankdrive(0, 0);
+    	Robot.driveTrain.tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

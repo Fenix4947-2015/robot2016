@@ -23,7 +23,7 @@ public class DriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.tankdrive(speed, speed);
+    	Robot.driveTrain.tankDrive(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +34,7 @@ public class DriveForward extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	// Stop the robot when interrupted
-    	Robot.driveTrain.tankdrive(0, 0);
+    	Robot.driveTrain.tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same

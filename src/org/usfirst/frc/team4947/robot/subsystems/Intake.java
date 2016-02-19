@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Intake extends Subsystem {
     
     private CANTalon rollerMotor = new CANTalon(0);
-    //private CANTalon liftMotor = new CANTalon(0);
+    private CANTalon liftMotor = new CANTalon(11);
 
     public Intake(){
     	LiveWindow.addActuator("Intake", "Roller", rollerMotor);
