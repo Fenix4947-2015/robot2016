@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Climber extends Subsystem {
 	
-	private CANTalon motor = new CANTalon(0);
+	private CANTalon motor = new CANTalon(10);
 	
 	public Climber(){
 		LiveWindow.addActuator("Intake", "Motor", motor);

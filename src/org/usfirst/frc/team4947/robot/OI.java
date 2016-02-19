@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.DriveCamera;
 import org.usfirst.frc.team4947.robot.commands.DriveForward;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -76,6 +77,7 @@ public class OI {
 
         // TODO Link button state to execute commands
         //driverX.whenPressed(new RobotDeliverStack());
+        driverA.whenPressed(new DriveCamera());
         
     	// TODO Add button on the SmartDashboard to execute commands manually
         SmartDashboard.putData("DriveForward", new DriveForward(0.5));

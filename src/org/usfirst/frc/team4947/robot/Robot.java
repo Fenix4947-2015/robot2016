@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
+import edu.wpi.first.wpilibj.vision.USBCamera.WhiteBalance;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,21 +30,28 @@ public class Robot extends IterativeRobot {
 
     public static USBCamera camera;
     
-    public static OI oi = new OI();
+    public static OI oi;
 
-    public static DriveTrain driveTrain = new DriveTrain();
-    public static Intake intake = new Intake();
-    public static Shooter shooter = new Shooter();
-    public static Climber climber = new Climber();
+    public static DriveTrain driveTrain;
+    public static Intake intake;
+    public static Shooter shooter;
+    public static Climber climber;
+    
+    public static boolean testMode = false;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	driveTrain = new DriveTrain();
+    	intake = new Intake();
+    	shooter = new Shooter();
+    	climber = new Climber();
+    	
+    	oi = new OI();
+    	
         camera = new USBCamera("cam0");
-        camera.setExposureManual(5);
-        camera.setBrightness(5);
         camera.startCapture();
     	
         // Instantiate the command used for the autonomous period
@@ -56,6 +64,8 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(intake);
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(climber);
+        
+		SmartDashboard.putBoolean("TestMode", false);
     }
     
     /**
@@ -63,8 +73,8 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit() {
-    	camera.stopCapture();
-        camera.closeCamera();
+    	//camera.stopCapture();
+        //camera.closeCamera();
     }
 
     public void disabledPeriodic() {
@@ -110,6 +120,8 @@ public class Robot extends IterativeRobot {
     }
     
     private void log() {
+    	testMode = SmartDashboard.getBoolean("TestMode", false);
+    	
         driveTrain.log();
         intake.log();
         shooter.log();
