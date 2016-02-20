@@ -219,8 +219,12 @@ public class DriveCamera extends Command {
 		double targetWidthPixel = partInfo.Width;
 		double targetWidthInch = 20.0;
 		
-		double offsetInch = offsetPixel * targetWidthInch / targetWidthPixel;
+		// consider distance between camera and robot center line
+		double offsetCamInch = -10.0;
+		double offsetInch = offsetPixel * targetWidthInch / targetWidthPixel - offsetCamInch;
 		
+		// offset distanceInch by distance between shooter and center of rotation
+		distanceInch = distanceInch + 0.0; 
 		double angle = Math.toDegrees(Math.atan(offsetInch / distanceInch));
 		
 		return angle;
