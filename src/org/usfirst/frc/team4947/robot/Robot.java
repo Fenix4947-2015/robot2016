@@ -1,10 +1,12 @@
 
 package org.usfirst.frc.team4947.robot;
 
-import org.usfirst.frc.team4947.robot.commands.DoNothing;
+import org.usfirst.frc.team4947.robot.commands.AutoDoNothing;
+import org.usfirst.frc.team4947.robot.subsystems.Cannon;
 import org.usfirst.frc.team4947.robot.subsystems.Climber;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4947.robot.subsystems.Intake;
+import org.usfirst.frc.team4947.robot.subsystems.Lifter;
 import org.usfirst.frc.team4947.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -33,6 +35,8 @@ public class Robot extends IterativeRobot {
 
     public static DriveTrain driveTrain;
     public static Intake intake;
+    public static Lifter lifter;
+    public static Cannon cannon;
     public static Shooter shooter;
     public static Climber climber;
     
@@ -45,6 +49,8 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	driveTrain = new DriveTrain();
     	intake = new Intake();
+    	lifter = new Lifter();
+    	cannon = new Cannon();
     	shooter = new Shooter();
     	climber = new Climber();
     	
@@ -54,13 +60,15 @@ public class Robot extends IterativeRobot {
         camera.startCapture();
     	
         // Instantiate the command used for the autonomous period
-        autonomousChooser.addDefault("DoNothing", new DoNothing());
+        autonomousChooser.addDefault("DoNothing", new AutoDoNothing());
         //autonomousChooser.addObject("AutonomousSimple", new AutonomousSimple());
         SmartDashboard.putData("AutoMode", autonomousChooser);
        
         // Show what command your subsystem is running on the SmartDashboard
         SmartDashboard.putData(driveTrain);
         SmartDashboard.putData(intake);
+        SmartDashboard.putData(lifter);
+        SmartDashboard.putData(cannon);
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(climber);
         
@@ -121,6 +129,8 @@ public class Robot extends IterativeRobot {
     	
         driveTrain.log();
         intake.log();
+        lifter.log();
+        cannon.log();
         shooter.log();
         climber.log();
     }

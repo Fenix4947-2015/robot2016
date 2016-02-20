@@ -19,6 +19,7 @@ public class ClimberPosition extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.climber.enable();
     	Robot.climber.setSetpoint(position);
     }
 
@@ -33,10 +34,12 @@ public class ClimberPosition extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.climber.disable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

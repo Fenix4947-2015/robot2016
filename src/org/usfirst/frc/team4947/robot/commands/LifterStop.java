@@ -7,29 +7,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShooterRelease extends Command {
+public class LifterStop extends Command {
 
-	private boolean isReleasePosition;
-	
-    public ShooterRelease(boolean isRelease) {
-        requires(Robot.shooter);
-        
-        this.isReleasePosition = isRelease;
+    public LifterStop() {
+        requires(Robot.lifter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.setReleasePosition(isReleasePosition);
-    	setTimeout(0.1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.lifter.setLifterSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true

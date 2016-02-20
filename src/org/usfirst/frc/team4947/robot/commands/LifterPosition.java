@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakePosition extends Command {
+public class LifterPosition extends Command {
 
 	private double setPoint;
 	
-    public IntakePosition(double setPoint) {
-        requires(Robot.intake);
+    public LifterPosition(double setPoint) {
+        requires(Robot.lifter);
         
         this.setPoint = setPoint;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intake.enable();
-    	Robot.intake.setSetpoint(setPoint);
+    	Robot.lifter.enable();
+    	Robot.lifter.setSetpoint(setPoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -29,15 +29,17 @@ public class IntakePosition extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Robot.intake.onTarget();
+    	return Robot.lifter.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.lifter.disable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

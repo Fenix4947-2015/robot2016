@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.BallPickUp;
+import org.usfirst.frc.team4947.robot.commands.BallShoot;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.DriveCamera;
 import org.usfirst.frc.team4947.robot.commands.DriveDistance;
@@ -9,14 +11,17 @@ import org.usfirst.frc.team4947.robot.commands.DriveRotate;
 import org.usfirst.frc.team4947.robot.commands.DriveTank;
 import org.usfirst.frc.team4947.robot.commands.IntakeInOut;
 import org.usfirst.frc.team4947.robot.commands.IntakeManual;
-import org.usfirst.frc.team4947.robot.commands.IntakePosition;
 import org.usfirst.frc.team4947.robot.commands.IntakeStop;
+import org.usfirst.frc.team4947.robot.commands.LifterManual;
+import org.usfirst.frc.team4947.robot.commands.LifterPosition;
+import org.usfirst.frc.team4947.robot.commands.LifterStop;
 import org.usfirst.frc.team4947.robot.commands.ShooterInOut;
 import org.usfirst.frc.team4947.robot.commands.ShooterManual;
-import org.usfirst.frc.team4947.robot.commands.ShooterPosition;
-import org.usfirst.frc.team4947.robot.commands.ShooterRelease;
+import org.usfirst.frc.team4947.robot.commands.CannonPosition;
+import org.usfirst.frc.team4947.robot.commands.CannonRelease;
 import org.usfirst.frc.team4947.robot.commands.ShooterStop;
 import org.usfirst.frc.team4947.robot.subsystems.Intake;
+import org.usfirst.frc.team4947.robot.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
@@ -92,7 +97,9 @@ public class OI {
 
         // TODO Link button state to execute commands
         //driverX.whenPressed(new RobotDeliverStack());
-        driverA.whenPressed(new DriveCamera());
+        driverA.whileHeld(new BallPickUp());
+        driverB.whileHeld(new BallShoot());
+        driverX.whenPressed(new DriveCamera());
         
         SmartDashboard.putData("DriveStop", new DriveForward(0));
         SmartDashboard.putData("DriveResetEncoder", new DriveResetEncoder());
@@ -109,18 +116,22 @@ public class OI {
         SmartDashboard.putData("IntakeIn", new IntakeInOut(0.5));
         SmartDashboard.putData("IntakeOut", new IntakeInOut(-0.5));
         SmartDashboard.putData("IntakeManual", new IntakeManual());
-        SmartDashboard.putData("IntakePositionLow", new IntakePosition(Intake.POSITION_LOW));
-        SmartDashboard.putData("IntakePositionHigh", new IntakePosition(Intake.POSITION_HIGH));
-        SmartDashboard.putData("IntakePositionClimb", new IntakePosition(Intake.POSITION_CLIMB));
+        
+        
+        SmartDashboard.putData("LifterStop", new LifterStop());
+        SmartDashboard.putData("LifterManual", new LifterManual());
+        SmartDashboard.putData("LifterPositionLow", new LifterPosition(Lifter.POSITION_LOW));
+        SmartDashboard.putData("LifterPositionHigh", new LifterPosition(Lifter.POSITION_HIGH));
+        SmartDashboard.putData("LifterPositionClimb", new LifterPosition(Lifter.POSITION_CLIMB));
         
         SmartDashboard.putData("ShooterStop", new ShooterStop());
         SmartDashboard.putData("ShooterIn", new ShooterInOut(0.5));
         SmartDashboard.putData("ShooterOut", new ShooterInOut(-0.5));
         SmartDashboard.putData("ShooterManual", new ShooterManual());
-        SmartDashboard.putData("ShooterPositionUp", new ShooterPosition(true));
-        SmartDashboard.putData("ShooterPositionDown", new ShooterPosition(false));
-        SmartDashboard.putData("ShooterReleaseOn", new ShooterRelease(true));
-        SmartDashboard.putData("ShooterReleaseOff", new ShooterRelease(false));
+        SmartDashboard.putData("ShooterPositionUp", new CannonPosition(true));
+        SmartDashboard.putData("ShooterPositionDown", new CannonPosition(false));
+        SmartDashboard.putData("ShooterReleaseOn", new CannonRelease(true));
+        SmartDashboard.putData("ShooterReleaseOff", new CannonRelease(false));
     }
     
     public double getJoystickDriverAxis(XBoxAxis axis) {

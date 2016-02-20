@@ -7,20 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShooterPosition extends Command {
+public class CannonPosition extends Command {
 
 	private boolean isUpPosition;
 	
-    public ShooterPosition(boolean isUpPosition) {
-        requires(Robot.shooter);
+    public CannonPosition(boolean isUpPosition) {
+        requires(Robot.cannon);
         
         this.isUpPosition = isUpPosition;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.setShootingPosition(isUpPosition);
-    	setTimeout(0.1);
+    	Robot.cannon.setShootingPosition(isUpPosition);
+    	setTimeout(0.3);
     }
 
     // Called repeatedly when this Command is scheduled to run

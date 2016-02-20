@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeManual extends Command {
+public class LifterManual extends Command {
 
-    public IntakeManual() {
-        requires(Robot.intake);
+    public LifterManual() {
+        requires(Robot.lifter);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +20,7 @@ public class IntakeManual extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.setRollerSpeed(Robot.oi.getJoystickDriverAxis(XBoxAxis.RightStickY, 0.15));
+    	Robot.lifter.setLifterSpeed(Robot.oi.getJoystickDriverAxis(XBoxAxis.RightStickY, 0.15));
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -30,7 +30,7 @@ public class IntakeManual extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.intake.setRollerSpeed(0);
+    	Robot.lifter.setLifterSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
