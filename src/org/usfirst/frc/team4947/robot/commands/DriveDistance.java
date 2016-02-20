@@ -21,16 +21,17 @@ public class DriveDistance extends Command {
 
 	public DriveDistance(double distance, double speed) {
 		requires(Robot.driveTrain);
+		
 		this.distance = distance;
 		this.speed = speed;
 	}
 
 	protected void initialize() {
-		Robot.driveTrain.getRightEncoder().reset();
+		Robot.driveTrain.setLeftPosition(0);
 	}
 
 	protected void execute() {
-		error = (distance - Robot.driveTrain.getRightEncoder().getDistance());
+		error = (distance - Robot.driveTrain.getLeftPosition());
 		
 		if (speed * KP * error >= speed) {
 			Robot.driveTrain.tankDrive(speed, speed);

@@ -32,12 +32,10 @@ public class DriveArcade extends Command {
     protected void execute() {
     	Robot.camera.getImage(frame);
     	
-    	double moveValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.RightTrigger) - Robot.oi.getJoystickDriverAxis(XBoxAxis.LeftTrigger);
+    	double moveValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LeftTrigger) - Robot.oi.getJoystickDriverAxis(XBoxAxis.RightTrigger);
     	double rotateValue = Robot.oi.getJoystickDriverAxis(XBoxAxis.LeftStickX, 0.1);
     	
-    	// TODO
-    	//Robot.driveTrain.arcadeDrive(moveValue, -rotateValue);
-    	Robot.driveTrain.arcadeDrive(rotateValue, -moveValue);
+    	Robot.driveTrain.arcadeDrive(moveValue, rotateValue);
     	
     	CameraServer.getInstance().setImage(frame);
     }

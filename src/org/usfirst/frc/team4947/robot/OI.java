@@ -1,7 +1,22 @@
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.DriveCamera;
+import org.usfirst.frc.team4947.robot.commands.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.DriveForward;
+import org.usfirst.frc.team4947.robot.commands.DriveResetEncoder;
+import org.usfirst.frc.team4947.robot.commands.DriveRotate;
+import org.usfirst.frc.team4947.robot.commands.DriveTank;
+import org.usfirst.frc.team4947.robot.commands.IntakeInOut;
+import org.usfirst.frc.team4947.robot.commands.IntakeManual;
+import org.usfirst.frc.team4947.robot.commands.IntakePosition;
+import org.usfirst.frc.team4947.robot.commands.IntakeStop;
+import org.usfirst.frc.team4947.robot.commands.ShooterInOut;
+import org.usfirst.frc.team4947.robot.commands.ShooterManual;
+import org.usfirst.frc.team4947.robot.commands.ShooterPosition;
+import org.usfirst.frc.team4947.robot.commands.ShooterRelease;
+import org.usfirst.frc.team4947.robot.commands.ShooterStop;
+import org.usfirst.frc.team4947.robot.subsystems.Intake;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
@@ -79,10 +94,33 @@ public class OI {
         //driverX.whenPressed(new RobotDeliverStack());
         driverA.whenPressed(new DriveCamera());
         
-    	// TODO Add button on the SmartDashboard to execute commands manually
+        SmartDashboard.putData("DriveStop", new DriveForward(0));
+        SmartDashboard.putData("DriveResetEncoder", new DriveResetEncoder());
+        SmartDashboard.putData("DriveArcade", new DriveArcade());
+        SmartDashboard.putData("DriveTank", new DriveTank());
+        SmartDashboard.putData("DriveCamera", new DriveCamera());
         SmartDashboard.putData("DriveForward", new DriveForward(0.5));
         SmartDashboard.putData("DriveBackward", new DriveForward(-0.5));
-        SmartDashboard.putData("DriveStop", new DriveForward(0));
+        SmartDashboard.putData("DriveDistance", new DriveDistance(1));
+        SmartDashboard.putData("DriveRotate+45", new DriveRotate(45, 0.5));
+        SmartDashboard.putData("DriveRotate-45", new DriveRotate(-45, 0.5));
+        
+        SmartDashboard.putData("IntakeStop", new IntakeStop());
+        SmartDashboard.putData("IntakeIn", new IntakeInOut(0.5));
+        SmartDashboard.putData("IntakeOut", new IntakeInOut(-0.5));
+        SmartDashboard.putData("IntakeManual", new IntakeManual());
+        SmartDashboard.putData("IntakePositionLow", new IntakePosition(Intake.POSITION_LOW));
+        SmartDashboard.putData("IntakePositionHigh", new IntakePosition(Intake.POSITION_HIGH));
+        SmartDashboard.putData("IntakePositionClimb", new IntakePosition(Intake.POSITION_CLIMB));
+        
+        SmartDashboard.putData("ShooterStop", new ShooterStop());
+        SmartDashboard.putData("ShooterIn", new ShooterInOut(0.5));
+        SmartDashboard.putData("ShooterOut", new ShooterInOut(-0.5));
+        SmartDashboard.putData("ShooterManual", new ShooterManual());
+        SmartDashboard.putData("ShooterPositionUp", new ShooterPosition(true));
+        SmartDashboard.putData("ShooterPositionDown", new ShooterPosition(false));
+        SmartDashboard.putData("ShooterReleaseOn", new ShooterRelease(true));
+        SmartDashboard.putData("ShooterReleaseOff", new ShooterRelease(false));
     }
     
     public double getJoystickDriverAxis(XBoxAxis axis) {

@@ -7,24 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeStop extends Command {
+public class ClimberPosition extends Command {
 
-    public IntakeStop() {
-        requires(Robot.intake);
+	private double position;
+	
+    public ClimberPosition(double position) {
+        requires(Robot.climber);
+        
+        this.position = position;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.climber.setSetpoint(position);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.setRollerSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.climber.onTarget();
     }
 
     // Called once after isFinished returns true

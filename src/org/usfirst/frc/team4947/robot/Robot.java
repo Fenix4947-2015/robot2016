@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.vision.USBCamera;
-import edu.wpi.first.wpilibj.vision.USBCamera.WhiteBalance;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -73,8 +72,6 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit() {
-    	//camera.stopCapture();
-        //camera.closeCamera();
     }
 
     public void disabledPeriodic() {

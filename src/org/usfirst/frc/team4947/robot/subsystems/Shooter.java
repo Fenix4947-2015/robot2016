@@ -12,13 +12,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 public class Shooter extends Subsystem {
     
-    private CANTalon leftMotor = new CANTalon(2);
-    private CANTalon rightMotor = new CANTalon(1);
+    private CANTalon leftMotor = new CANTalon(9);
+    private CANTalon rightMotor = new CANTalon(7);
     private Solenoid positionSolenoid = new Solenoid(1);
     private Solenoid releaseSolenoid = new Solenoid(2);
     
     public Shooter(){
-    	leftMotor.setInverted(true);
+    	rightMotor.setInverted(true);
     	
     	LiveWindow.addActuator("Shooter", "LeftMotor", leftMotor);
     	LiveWindow.addActuator("Shooter", "RightMotor", rightMotor);
@@ -35,12 +35,12 @@ public class Shooter extends Subsystem {
     	rightMotor.set(speed);
     }
     
-    public void setShootingPosition(boolean state){
-    	positionSolenoid.set(state);
+    public void setShootingPosition(boolean isUpPosition){
+    	positionSolenoid.set(isUpPosition);
     }
 
-    public void setRelease(boolean state){
-    	releaseSolenoid.set(state);
+    public void setReleasePosition(boolean isReleasePosition){
+    	releaseSolenoid.set(isReleasePosition);
     }
     
     public void log(){

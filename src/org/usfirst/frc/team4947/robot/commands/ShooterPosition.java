@@ -7,24 +7,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeStop extends Command {
+public class ShooterPosition extends Command {
 
-    public IntakeStop() {
-        requires(Robot.intake);
+	private boolean isUpPosition;
+	
+    public ShooterPosition(boolean isUpPosition) {
+        requires(Robot.shooter);
+        
+        this.isUpPosition = isUpPosition;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooter.setShootingPosition(isUpPosition);
+    	setTimeout(0.1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intake.setRollerSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
