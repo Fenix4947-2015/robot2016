@@ -27,11 +27,11 @@ public class DriveDistance extends Command {
 	}
 
 	protected void initialize() {
-		Robot.driveTrain.setLeftPosition(0);
+		Robot.driveTrain.setPosition(0);
 	}
 
 	protected void execute() {
-		error = (distance - Robot.driveTrain.getLeftPosition());
+		error = (distance - Robot.driveTrain.getPosition());
 		
 		if (speed * KP * error >= speed) {
 			Robot.driveTrain.tankDrive(speed, speed);

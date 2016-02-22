@@ -20,7 +20,7 @@ public class ShooterManual extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.setSpeed(Robot.oi.getJoystickDriverAxis(XBoxAxis.LeftStickX, 0.15));
+    	Robot.shooter.setSpeed(Robot.oi.getJoystickDriverAxis(XBoxAxis.LeftStickY, 0.15));
     }
 
     // Make this return true when this Command no longer needs to run execute()

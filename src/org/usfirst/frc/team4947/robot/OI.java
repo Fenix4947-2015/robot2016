@@ -2,6 +2,13 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.BallPickUp;
 import org.usfirst.frc.team4947.robot.commands.BallShoot;
+import org.usfirst.frc.team4947.robot.commands.CannonPosition;
+import org.usfirst.frc.team4947.robot.commands.CannonRelease;
+import org.usfirst.frc.team4947.robot.commands.ClimberInOut;
+import org.usfirst.frc.team4947.robot.commands.ClimberManual;
+import org.usfirst.frc.team4947.robot.commands.ClimberPosition;
+import org.usfirst.frc.team4947.robot.commands.ClimberResetEncoder;
+import org.usfirst.frc.team4947.robot.commands.ClimberStop;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.DriveCamera;
 import org.usfirst.frc.team4947.robot.commands.DriveDistance;
@@ -14,13 +21,12 @@ import org.usfirst.frc.team4947.robot.commands.IntakeManual;
 import org.usfirst.frc.team4947.robot.commands.IntakeStop;
 import org.usfirst.frc.team4947.robot.commands.LifterManual;
 import org.usfirst.frc.team4947.robot.commands.LifterPosition;
+import org.usfirst.frc.team4947.robot.commands.LifterResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.LifterStop;
 import org.usfirst.frc.team4947.robot.commands.ShooterInOut;
 import org.usfirst.frc.team4947.robot.commands.ShooterManual;
-import org.usfirst.frc.team4947.robot.commands.CannonPosition;
-import org.usfirst.frc.team4947.robot.commands.CannonRelease;
 import org.usfirst.frc.team4947.robot.commands.ShooterStop;
-import org.usfirst.frc.team4947.robot.subsystems.Intake;
+import org.usfirst.frc.team4947.robot.subsystems.Climber;
 import org.usfirst.frc.team4947.robot.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -101,6 +107,9 @@ public class OI {
         driverB.whileHeld(new BallShoot());
         driverX.whenPressed(new DriveCamera());
         
+        SmartDashboard.putData("BallPickUp", new BallPickUp());
+        SmartDashboard.putData("BallShoot", new BallShoot());
+        
         SmartDashboard.putData("DriveStop", new DriveForward(0));
         SmartDashboard.putData("DriveResetEncoder", new DriveResetEncoder());
         SmartDashboard.putData("DriveArcade", new DriveArcade());
@@ -117,8 +126,8 @@ public class OI {
         SmartDashboard.putData("IntakeOut", new IntakeInOut(-0.5));
         SmartDashboard.putData("IntakeManual", new IntakeManual());
         
-        
         SmartDashboard.putData("LifterStop", new LifterStop());
+        SmartDashboard.putData("LifterResetEncoder", new LifterResetEncoder());
         SmartDashboard.putData("LifterManual", new LifterManual());
         SmartDashboard.putData("LifterPositionLow", new LifterPosition(Lifter.POSITION_LOW));
         SmartDashboard.putData("LifterPositionHigh", new LifterPosition(Lifter.POSITION_HIGH));
@@ -128,10 +137,20 @@ public class OI {
         SmartDashboard.putData("ShooterIn", new ShooterInOut(0.5));
         SmartDashboard.putData("ShooterOut", new ShooterInOut(-0.5));
         SmartDashboard.putData("ShooterManual", new ShooterManual());
-        SmartDashboard.putData("ShooterPositionUp", new CannonPosition(true));
-        SmartDashboard.putData("ShooterPositionDown", new CannonPosition(false));
-        SmartDashboard.putData("ShooterReleaseOn", new CannonRelease(true));
-        SmartDashboard.putData("ShooterReleaseOff", new CannonRelease(false));
+        
+        SmartDashboard.putData("CannonReleaseOn", new CannonRelease(true));
+        SmartDashboard.putData("CannonReleaseOff", new CannonRelease(false));
+        SmartDashboard.putData("CannonPositionUp", new CannonPosition(true));
+        SmartDashboard.putData("CannonPositionDown", new CannonPosition(false));
+        
+        SmartDashboard.putData("ClimberStop", new ClimberStop());
+        SmartDashboard.putData("ClimberResetEncoder", new ClimberResetEncoder());
+        SmartDashboard.putData("ClimberIn", new ClimberInOut(0.5));
+        SmartDashboard.putData("ClimberOut", new ClimberInOut(-0.5));
+        SmartDashboard.putData("ClimberManual", new ClimberManual());
+        SmartDashboard.putData("ClimberPositionIn", new ClimberPosition(Climber.POSITION_IN));
+        SmartDashboard.putData("ClimberPositionOut", new ClimberPosition(Climber.POSITION_OUT));
+        SmartDashboard.putData("ClimberPositionClimb", new ClimberPosition(Climber.POSITION_CLIMB));
     }
     
     public double getJoystickDriverAxis(XBoxAxis axis) {

@@ -36,6 +36,7 @@ public class DriveTrain extends Subsystem {
     	robotDrive.setInvertedMotor(MotorType.kFrontLeft, true);
     	
 		// Configure encoders
+    	setPosition(0);
     	//rearLeftMotor.changeControlMode(TalonControlMode.Position);
 		//rearLeftMotor.configEncoderCodesPerRev(10);
     	
@@ -66,17 +67,17 @@ public class DriveTrain extends Subsystem {
     	return gyro.getAngle();
     }
     
-	public double getLeftPosition() {
+	public double getPosition() {
 		return -rearLeftMotor.getPosition();
 	}
 	
-	public void setLeftPosition(double position) {
+	public void setPosition(double position) {
 		rearLeftMotor.setPosition(position);
 	}
 
     public void log(){
     	SmartDashboard.putNumber("GyroAngle", gyro.getAngle());
-    	SmartDashboard.putNumber("LeftEncoder", getLeftPosition());
+    	SmartDashboard.putNumber("LeftEncoder", getPosition());
     }
 }
 

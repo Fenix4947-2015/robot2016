@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveResetEncoder extends Command {
+public class ClimberResetEncoder extends Command {
 
-    public DriveResetEncoder() {
-        requires(Robot.driveTrain);
+    public ClimberResetEncoder() {
+        requires(Robot.climber);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.setPosition(0);
+    	Robot.climber.setPosition(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
