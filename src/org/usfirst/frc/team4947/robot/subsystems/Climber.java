@@ -56,5 +56,11 @@ public class Climber extends PIDSubsystem {
     public void log(){
     	
     }
+    
+    // Workaround to get the subsystem to show on the SmartDashBoard
+    public String getSmartDashboardType() {
+        return "Subsystem";
+    }
+    
 }
 

@@ -14,6 +14,8 @@ public class Intake extends Subsystem {
     private CANTalon rollerMotor = new CANTalon(3);
 
     public Intake(){
+    	rollerMotor.setInverted(true);
+    	
     	LiveWindow.addActuator("Intake", "Roller", rollerMotor);
     }
     

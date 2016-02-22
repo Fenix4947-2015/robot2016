@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
     
+	private final static double ROTATE_OFFSET = 0.05;
+	
 	private AnalogGyro gyro = new AnalogGyro(0);
     
 	public CANTalon rearRightMotor = new CANTalon(6);		// Encoder
@@ -26,6 +28,7 @@ public class DriveTrain extends Subsystem {
 
     public DriveTrain(){
     	robotDrive.setSafetyEnabled(true);
+    	robotDrive.setExpiration(0.1);
     	
     	gyro.initGyro();
     	gyro.calibrate();
@@ -52,6 +55,14 @@ public class DriveTrain extends Subsystem {
     }
     
     public void arcadeDrive(double moveValue, double rotateValue){
+    	// Adjust the rotateValue to compensate the right motor being too strong
+    	if(moveValue > 0.1){
+    		rotateValue = rotateValue - ROTATE_OFFSET;
+    	}
+    	else if(moveValue < 0.1){
+    		rotateValue = rotateValue + ROTATE_OFFSET;
+    	}
+    	
 		robotDrive.arcadeDrive(moveValue, rotateValue);
     }
     

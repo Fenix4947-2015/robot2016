@@ -33,7 +33,7 @@ public class DriveCamera extends Command {
 		
 		public int compareTo(ParticleInfo r)
 		{
-			return (int)(r.AreaRatio - this.AreaRatio);
+			return (int)(r.ConvexHullArea - this.ConvexHullArea);
 		}
 	};
 	
@@ -93,7 +93,6 @@ public class DriveCamera extends Command {
     protected void execute() {
 
     	Robot.camera.getImage(frame);
-		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, hueRange, satRange, valRange);
 		
 		boolean binaryImage = SmartDashboard.getBoolean("BinaryImage");
 		if(binaryImage){
@@ -115,7 +114,9 @@ public class DriveCamera extends Command {
 		else{
 			CameraServer.getInstance().setImage(frame);
 		}
-    	
+		
+		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, hueRange, satRange, valRange);
+		
 		if(targetFound && !Robot.testMode){
 			Robot.driveTrain.arcadeDrive(rotateValue, 0);
     	}
@@ -150,20 +151,24 @@ public class DriveCamera extends Command {
 					par.Width = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
 					par.Height = NIVision.imaqMeasureParticle(binaryFrame, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
 					par.AspectRatio = par.Width / par.Height;
-					particles.add(par);
+					
+					// Make sure it looks like a target
+					if(Math.abs(par.AreaRatio - areaRatio) < 0.5 && Math.abs(par.AspectRatio - aspectRatio) < 0.5){
+						particles.add(par);
+					}
 				}
 				particles.sort(null);
-				ParticleInfo bestParticule = particles.get(0);
-	
-				SmartDashboard.putNumber("Area", bestParticule.Area);
-				SmartDashboard.putNumber("ConvexHullArea", bestParticule.ConvexHullArea);
-				SmartDashboard.putNumber("TargetWidth", bestParticule.Width);
-				SmartDashboard.putNumber("TargetHeight", bestParticule.Height);
-				SmartDashboard.putNumber("AreaRatio", bestParticule.AreaRatio);
-				SmartDashboard.putNumber("AspectRatio", bestParticule.AspectRatio);
-	
-				// Make sure it looks like a target
-				if(Math.abs(bestParticule.AreaRatio - areaRatio) < 0.5 && Math.abs(bestParticule.AspectRatio - aspectRatio) < 0.5){
+				
+				if(particles.size() > 0){
+					ParticleInfo bestParticule = particles.get(0);
+		
+					SmartDashboard.putNumber("Area", bestParticule.Area);
+					SmartDashboard.putNumber("ConvexHullArea", bestParticule.ConvexHullArea);
+					SmartDashboard.putNumber("TargetWidth", bestParticule.Width);
+					SmartDashboard.putNumber("TargetHeight", bestParticule.Height);
+					SmartDashboard.putNumber("AreaRatio", bestParticule.AreaRatio);
+					SmartDashboard.putNumber("AspectRatio", bestParticule.AspectRatio);
+		
 					int top = (int)bestParticule.Top;
 					int left = (int)bestParticule.Left;
 					int height = (int)(bestParticule.Bottom - bestParticule.Top);

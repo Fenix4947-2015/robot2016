@@ -5,6 +5,7 @@ import org.usfirst.frc.team4947.robot.commands.LifterManual;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,13 +15,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Lifter extends PIDSubsystem {
     
-	private final static double MAX_SPEED = 0.2;
+	private final static double MAX_SPEED = 0.5;
 	
 	public final static int POSITION_HIGH = 0;
 	public final static int POSITION_LOW = 580000;
 	public final static int POSITION_CLIMB = 400000;
 	
     private CANTalon lifterMotor = new CANTalon(4);
+    
+    private DigitalInput di = new DigitalInput(0);
 
     public Lifter(){
     	super(4, 0, 0);
@@ -53,11 +56,13 @@ public class Lifter extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-		return lifterMotor.get();
+    	SmartDashboard.putNumber("Lifter Input", returnPIDInput());
+		return lifterMotor.getPosition();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
+    	SmartDashboard.putNumber("Lifter Output", output);
 		output = limitSpeed(output);
 		lifterMotor.set(output);
 	}
@@ -75,6 +80,13 @@ public class Lifter extends PIDSubsystem {
 	
     public void log(){
     	SmartDashboard.putNumber("Lifter Encoder", getPosition());
+    	SmartDashboard.putBoolean("Lifter FwdLimit", lifterMotor.isFwdLimitSwitchClosed());
+    	SmartDashboard.putBoolean("Lifter RevLimit", lifterMotor.isRevLimitSwitchClosed());
+    }
+    
+    // Workaround to get the subsystem to show on the SmartDashBoard
+    public String getSmartDashboardType() {
+        return "Subsystem";
     }
 }
 
