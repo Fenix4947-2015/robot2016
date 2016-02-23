@@ -19,12 +19,15 @@ import org.usfirst.frc.team4947.robot.commands.DriveTank;
 import org.usfirst.frc.team4947.robot.commands.IntakeInOut;
 import org.usfirst.frc.team4947.robot.commands.IntakeManual;
 import org.usfirst.frc.team4947.robot.commands.IntakeStop;
+import org.usfirst.frc.team4947.robot.commands.LifterDown;
 import org.usfirst.frc.team4947.robot.commands.LifterManual;
 import org.usfirst.frc.team4947.robot.commands.LifterPosition;
 import org.usfirst.frc.team4947.robot.commands.LifterResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.LifterStop;
+import org.usfirst.frc.team4947.robot.commands.LifterUp;
 import org.usfirst.frc.team4947.robot.commands.ShooterInOut;
 import org.usfirst.frc.team4947.robot.commands.ShooterManual;
+import org.usfirst.frc.team4947.robot.commands.ShooterStart;
 import org.usfirst.frc.team4947.robot.commands.ShooterStop;
 import org.usfirst.frc.team4947.robot.subsystems.Climber;
 import org.usfirst.frc.team4947.robot.subsystems.Lifter;
@@ -106,6 +109,8 @@ public class OI {
         driverA.whileHeld(new BallPickUp());
         driverB.whileHeld(new BallShoot());
         driverX.whenPressed(new DriveCamera());
+        driverLB.whenPressed(new CannonPosition(false));
+        driverRB.whenPressed(new CannonPosition(true));
         
         SmartDashboard.putData("BallPickUp", new BallPickUp());
         SmartDashboard.putData("BallShoot", new BallShoot());
@@ -132,7 +137,10 @@ public class OI {
         SmartDashboard.putData("LifterPositionLow", new LifterPosition(Lifter.POSITION_LOW));
         SmartDashboard.putData("LifterPositionHigh", new LifterPosition(Lifter.POSITION_HIGH));
         SmartDashboard.putData("LifterPositionClimb", new LifterPosition(Lifter.POSITION_CLIMB));
+        SmartDashboard.putData("LifterUp", new LifterUp());
+        SmartDashboard.putData("LifterDown", new LifterDown());
         
+        SmartDashboard.putData("ShooterStart", new ShooterStart());
         SmartDashboard.putData("ShooterStop", new ShooterStop());
         SmartDashboard.putData("ShooterIn", new ShooterInOut(0.5));
         SmartDashboard.putData("ShooterOut", new ShooterInOut(-0.5));

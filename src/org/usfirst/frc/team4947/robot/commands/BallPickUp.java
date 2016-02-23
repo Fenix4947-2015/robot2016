@@ -10,9 +10,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class BallPickUp extends CommandGroup {
     
     public  BallPickUp() {
-    	addParallel(new CannonRelease(false));
+    	addSequential(new CannonRelease(false));
     	addParallel(new IntakeInOut(0.5));
     	//addParallel(new LifterPosition(Lifter.POSITION_LOW));
     	addParallel(new ShooterInOut(0.5));
+    	//addSequential(new CannonRelease(false));
     }
 }

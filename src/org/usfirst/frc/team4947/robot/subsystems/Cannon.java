@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 public class Cannon extends Subsystem {
     
     private Solenoid positionSolenoid = new Solenoid(1);
-    private Solenoid releaseSolenoid = new Solenoid(2);
+    private Solenoid releaseSolenoid = new Solenoid(0);
     
     public Cannon(){
     	LiveWindow.addActuator("Cannon", "PositionSolenoid", positionSolenoid);

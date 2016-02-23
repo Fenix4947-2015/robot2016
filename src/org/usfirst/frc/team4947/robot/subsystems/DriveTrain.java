@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot.subsystems;
 
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
+import org.usfirst.frc.team4947.robot.commands.DriveStop;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -51,7 +52,7 @@ public class DriveTrain extends Subsystem {
     }
     
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveArcade());
+        setDefaultCommand(new DriveStop());
     }
     
     public void arcadeDrive(double moveValue, double rotateValue){

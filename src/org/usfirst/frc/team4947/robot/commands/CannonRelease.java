@@ -20,7 +20,7 @@ public class CannonRelease extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.cannon.setReleasePosition(isReleasePosition);
-    	setTimeout(0.1);
+    	setTimeout(0.3);
     }
 
     // Called repeatedly when this Command is scheduled to run

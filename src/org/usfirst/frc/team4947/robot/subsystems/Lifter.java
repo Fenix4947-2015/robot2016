@@ -53,6 +53,14 @@ public class Lifter extends PIDSubsystem {
 	public void setPosition(double position) {
 		lifterMotor.setPosition(position);
 	}
+	
+	public boolean getUpLimit() {
+		return lifterMotor.isFwdLimitSwitchClosed();
+	}
+	
+	public boolean getDownLimit() {
+		return lifterMotor.isRevLimitSwitchClosed();
+	}
 
 	@Override
 	protected double returnPIDInput() {
