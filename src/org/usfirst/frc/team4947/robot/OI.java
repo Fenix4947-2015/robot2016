@@ -2,6 +2,8 @@ package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.BallPickUp;
 import org.usfirst.frc.team4947.robot.commands.BallShoot;
+import org.usfirst.frc.team4947.robot.commands.CameraDefault;
+import org.usfirst.frc.team4947.robot.commands.CameraTarget;
 import org.usfirst.frc.team4947.robot.commands.CannonPosition;
 import org.usfirst.frc.team4947.robot.commands.CannonRelease;
 import org.usfirst.frc.team4947.robot.commands.ClimberInOut;
@@ -10,18 +12,20 @@ import org.usfirst.frc.team4947.robot.commands.ClimberPosition;
 import org.usfirst.frc.team4947.robot.commands.ClimberResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.ClimberStop;
 import org.usfirst.frc.team4947.robot.commands.DriveArcade;
-import org.usfirst.frc.team4947.robot.commands.DriveCamera;
 import org.usfirst.frc.team4947.robot.commands.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.DriveForward;
 import org.usfirst.frc.team4947.robot.commands.DriveResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.DriveRotate;
+import org.usfirst.frc.team4947.robot.commands.DriveRotateAngle;
+import org.usfirst.frc.team4947.robot.commands.DriveStop;
 import org.usfirst.frc.team4947.robot.commands.DriveTank;
+import org.usfirst.frc.team4947.robot.commands.DriveTarget;
 import org.usfirst.frc.team4947.robot.commands.IntakeInOut;
 import org.usfirst.frc.team4947.robot.commands.IntakeManual;
 import org.usfirst.frc.team4947.robot.commands.IntakeStop;
 import org.usfirst.frc.team4947.robot.commands.LifterDown;
+import org.usfirst.frc.team4947.robot.commands.LifterKickDown;
 import org.usfirst.frc.team4947.robot.commands.LifterManual;
-import org.usfirst.frc.team4947.robot.commands.LifterPosition;
 import org.usfirst.frc.team4947.robot.commands.LifterResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.LifterStop;
 import org.usfirst.frc.team4947.robot.commands.LifterUp;
@@ -30,7 +34,6 @@ import org.usfirst.frc.team4947.robot.commands.ShooterManual;
 import org.usfirst.frc.team4947.robot.commands.ShooterStart;
 import org.usfirst.frc.team4947.robot.commands.ShooterStop;
 import org.usfirst.frc.team4947.robot.subsystems.Climber;
-import org.usfirst.frc.team4947.robot.subsystems.Lifter;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
@@ -108,23 +111,32 @@ public class OI {
         //driverX.whenPressed(new RobotDeliverStack());
         driverA.whileHeld(new BallPickUp());
         driverB.whileHeld(new BallShoot());
-        driverX.whenPressed(new DriveCamera());
+        driverX.whileHeld(new CameraTarget());
+        driverX.whenReleased(new DriveTarget());
+        
+        driverB.whenReleased(new CannonRelease(false));
         driverLB.whenPressed(new CannonPosition(false));
         driverRB.whenPressed(new CannonPosition(true));
         
         SmartDashboard.putData("BallPickUp", new BallPickUp());
         SmartDashboard.putData("BallShoot", new BallShoot());
+        SmartDashboard.putData("BallAlign", new BallShoot());
         
-        SmartDashboard.putData("DriveStop", new DriveForward(0));
+        SmartDashboard.putData("CameraDefault", new CameraDefault());
+        SmartDashboard.putData("CameraTarget", new CameraTarget());
+        
+        SmartDashboard.putData("DriveStop", new DriveStop());
         SmartDashboard.putData("DriveResetEncoder", new DriveResetEncoder());
         SmartDashboard.putData("DriveArcade", new DriveArcade());
         SmartDashboard.putData("DriveTank", new DriveTank());
-        SmartDashboard.putData("DriveCamera", new DriveCamera());
+        SmartDashboard.putData("DriveTarget", new DriveTarget());
         SmartDashboard.putData("DriveForward", new DriveForward(0.5));
         SmartDashboard.putData("DriveBackward", new DriveForward(-0.5));
         SmartDashboard.putData("DriveDistance", new DriveDistance(1));
-        SmartDashboard.putData("DriveRotate+45", new DriveRotate(45, 0.5));
-        SmartDashboard.putData("DriveRotate-45", new DriveRotate(-45, 0.5));
+        SmartDashboard.putData("DriveRotateAngle+25", new DriveRotateAngle(25, 0.5));
+        SmartDashboard.putData("DriveRotateAngle-25", new DriveRotateAngle(-25, 0.5));
+        SmartDashboard.putData("DriveRotate+0.5", new DriveRotate(0.5, 0.5));
+        SmartDashboard.putData("DriveRotate-0.5", new DriveRotate(-0.5, 0.5));
         
         SmartDashboard.putData("IntakeStop", new IntakeStop());
         SmartDashboard.putData("IntakeIn", new IntakeInOut(0.5));
@@ -134,11 +146,12 @@ public class OI {
         SmartDashboard.putData("LifterStop", new LifterStop());
         SmartDashboard.putData("LifterResetEncoder", new LifterResetEncoder());
         SmartDashboard.putData("LifterManual", new LifterManual());
-        SmartDashboard.putData("LifterPositionLow", new LifterPosition(Lifter.POSITION_LOW));
-        SmartDashboard.putData("LifterPositionHigh", new LifterPosition(Lifter.POSITION_HIGH));
-        SmartDashboard.putData("LifterPositionClimb", new LifterPosition(Lifter.POSITION_CLIMB));
-        SmartDashboard.putData("LifterUp", new LifterUp());
-        SmartDashboard.putData("LifterDown", new LifterDown());
+        //SmartDashboard.putData("LifterPositionLow", new LifterPosition(Lifter.POSITION_LOW));
+        //SmartDashboard.putData("LifterPositionHigh", new LifterPosition(Lifter.POSITION_HIGH));
+        //SmartDashboard.putData("LifterPositionClimb", new LifterPosition(Lifter.POSITION_CLIMB));
+        SmartDashboard.putData("LifterUp", new LifterUp(1.0));
+        SmartDashboard.putData("LifterDown", new LifterDown(1.0));
+        SmartDashboard.putData("LifterKickDown", new LifterKickDown());
         
         SmartDashboard.putData("ShooterStart", new ShooterStart());
         SmartDashboard.putData("ShooterStop", new ShooterStop());

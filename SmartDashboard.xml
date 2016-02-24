@@ -1,0 +1,278 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="LifterKickDown" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="37" y="874"/>
+	</widget>
+	<widget field="ShooterSpeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="311" y="148"/>
+	</widget>
+	<widget field="DriveRotate-0.5" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="631" y="158"/>
+	</widget>
+	<widget field="DriveRotate+0.5" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="627" y="123"/>
+	</widget>
+	<widget field="DriveRotateAngle-25" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="617" y="56"/>
+	</widget>
+	<widget field="DriveRotateAngle+25" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="605" y="88"/>
+	</widget>
+	<widget field="BallAlign" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="639" y="363"/>
+	</widget>
+	<widget field="LifterPositionClimb" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="841"/>
+	</widget>
+	<widget field="LifterPositionLow" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="805"/>
+	</widget>
+	<widget field="LifterPositionHigh" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="769"/>
+	</widget>
+	<widget field="DriveCamera" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="297"/>
+	</widget>
+	<widget field="TargetFound" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="1535" y="729"/>
+	</widget>
+	<widget field="TargetAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.SimpleDial">
+		<location x="1446" y="574"/>
+		<property name="Upper Limit" value="45.0"/>
+		<property name="Lower Limit" value="-45.0"/>
+	</widget>
+	<widget field="Lifter RevLimit" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="208" y="399"/>
+	</widget>
+	<widget field="Lifter FwdLimit" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="209" y="381"/>
+	</widget>
+	<widget field="BinaryImage" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
+		<location x="1812" y="601"/>
+	</widget>
+	<widget field="TestMode" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.CheckBox">
+		<location x="1829" y="578"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtension">
+		<location x="1160" y="4"/>
+		<width>755</width>
+		<height>564</height>
+	</static-widget>
+	<widget field="ShooterStart" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="308" y="87"/>
+	</widget>
+	<widget field="AutoMode" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="831" y="1"/>
+	</widget>
+	<widget field="TargetDistance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1710" y="676"/>
+	</widget>
+	<widget field="Hue min" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1147" y="587"/>
+	</widget>
+	<widget field="ShooterIn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="323" y="29"/>
+	</widget>
+	<widget field="ConvexHullArea" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1105" y="892"/>
+	</widget>
+	<widget field="Filtered particles" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1419" y="830"/>
+	</widget>
+	<widget field="DriveForward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="48" y="87"/>
+	</widget>
+	<widget field="BallPickUp" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="629" y="395"/>
+	</widget>
+	<widget field="CameraTarget" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="907" y="307"/>
+	</widget>
+	<widget field="LifterUp" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="76" y="400"/>
+	</widget>
+	<widget field="Shooter" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="935" y="75"/>
+	</widget>
+	<widget field="IntakeStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="322" y="196"/>
+	</widget>
+	<widget field="LeftEncoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1726" y="799"/>
+	</widget>
+	<widget field="AspectRatio" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1127" y="941"/>
+	</widget>
+	<widget field="Area" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1167" y="866"/>
+	</widget>
+	<widget field="LifterStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="67" y="342"/>
+	</widget>
+	<widget field="CannonPositionDown" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="288" y="560"/>
+	</widget>
+	<widget field="Val min" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1152" y="694"/>
+	</widget>
+	<widget field="DriveArcade" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="56" y="58"/>
+	</widget>
+	<widget field="Target particles" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1424" y="856"/>
+	</widget>
+	<widget field="LifterDown" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="58" y="430"/>
+	</widget>
+	<widget field="TargetHeight" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1121" y="762"/>
+	</widget>
+	<widget field="Unfiltered particles" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1407" y="803"/>
+	</widget>
+	<widget field="Area max" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1138" y="839"/>
+	</widget>
+	<widget field="DriveTank" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="62" y="261"/>
+	</widget>
+	<widget field="LifterManual" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="48" y="459"/>
+	</widget>
+	<widget field="Sat min" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1151" y="642"/>
+	</widget>
+	<widget field="Lifter Encoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1713" y="827"/>
+	</widget>
+	<widget field="TargetWidth" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1123" y="786"/>
+	</widget>
+	<widget field="CannonReleaseOff" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="303" y="618"/>
+	</widget>
+	<widget field="DriveTrain" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="920" y="136"/>
+	</widget>
+	<widget field="ClimberOut" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="54" y="644"/>
+	</widget>
+	<widget field="ClimberIn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="64" y="615"/>
+	</widget>
+	<widget field="CameraDefault" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="905" y="279"/>
+	</widget>
+	<widget field="LifterResetEncoder" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="14" y="372"/>
+	</widget>
+	<widget field="Lifter" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="949" y="192"/>
+	</widget>
+	<widget field="OffsetY" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1745" y="738"/>
+	</widget>
+	<widget field="OffsetX" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1747" y="715"/>
+	</widget>
+	<widget field="ClimberPositionOut" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="8" y="733"/>
+	</widget>
+	<widget field="ShooterStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="308" y="1"/>
+	</widget>
+	<widget field="Hue max" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1145" y="614"/>
+	</widget>
+	<widget field="GyroAngle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1732" y="773"/>
+	</widget>
+	<widget field="ClimberStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="49" y="528"/>
+	</widget>
+	<widget field="DriveStop" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="71" y="0"/>
+	</widget>
+	<widget field="IntakeManual" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="305" y="284"/>
+	</widget>
+	<widget field="CannonPositionUp" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="306" y="530"/>
+	</widget>
+	<widget field="AreaRatio" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1138" y="916"/>
+	</widget>
+	<widget field="DriveBackward" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="40" y="116"/>
+	</widget>
+	<widget field="DriveDistance" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="46" y="145"/>
+	</widget>
+	<widget field="ClimberManual" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="32" y="674"/>
+	</widget>
+	<widget field="ShooterOut" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="315" y="57"/>
+	</widget>
+	<widget field="CannonReleaseOn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="302" y="589"/>
+	</widget>
+	<widget field="Camera" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="934" y="164"/>
+	</widget>
+	<widget field="BallShoot" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="633" y="425"/>
+	</widget>
+	<widget field="Climber" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="934" y="220"/>
+	</widget>
+	<widget field="ClimberResetEncoder" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="-5" y="557"/>
+	</widget>
+	<widget field="DriveResetEncoder" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="18" y="30"/>
+	</widget>
+	<widget field="Val max" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1149" y="720"/>
+	</widget>
+	<widget field="IntakeIn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="338" y="225"/>
+	</widget>
+	<widget field="ClimberPositionIn" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="20" y="586"/>
+	</widget>
+	<widget field="DriveTarget" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="56" y="174"/>
+	</widget>
+	<widget field="Cannon" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="936" y="43"/>
+	</widget>
+	<widget field="ClimberPositionClimb" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="-3" y="705"/>
+	</widget>
+	<widget field="Area min" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1141" y="813"/>
+	</widget>
+	<widget field="Sat max" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1148" y="668"/>
+	</widget>
+	<widget field="ShooterManual" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="295" y="115"/>
+	</widget>
+	<widget field="Particle index" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="1437" y="777"/>
+	</widget>
+	<widget field="Intake" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="945" y="106"/>
+	</widget>
+	<widget field="IntakeOut" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="328" y="254"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+	<hidden field="DriveRotate-25"/>
+	<hidden field="DriveRotate-45"/>
+	<hidden field="DriveRotate+25"/>
+	<hidden field="DriveRotate+45"/>
+</xml>

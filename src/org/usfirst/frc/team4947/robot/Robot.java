@@ -2,6 +2,7 @@
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.AutoDoNothing;
+import org.usfirst.frc.team4947.robot.subsystems.Camera;
 import org.usfirst.frc.team4947.robot.subsystems.Cannon;
 import org.usfirst.frc.team4947.robot.subsystems.Climber;
 import org.usfirst.frc.team4947.robot.subsystems.DriveTrain;
@@ -15,7 +16,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.USBCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,8 +28,6 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser autonomousChooser = new SendableChooser();
-
-    public static USBCamera camera;
     
     public static OI oi;
 
@@ -39,6 +37,7 @@ public class Robot extends IterativeRobot {
     public static Cannon cannon;
     public static Shooter shooter;
     public static Climber climber;
+    public static Camera camera;
     
     public static boolean testMode = false;
 
@@ -53,11 +52,9 @@ public class Robot extends IterativeRobot {
     	cannon = new Cannon();
     	shooter = new Shooter();
     	climber = new Climber();
+    	camera = new Camera();
     	
     	oi = new OI();
-    	
-        camera = new USBCamera("cam0");
-        camera.startCapture();
     	
         // Instantiate the command used for the autonomous period
         autonomousChooser.addDefault("DoNothing", new AutoDoNothing());
@@ -71,6 +68,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putData(cannon);
         SmartDashboard.putData(shooter);
         SmartDashboard.putData(climber);
+        SmartDashboard.putData(camera);
         
 		SmartDashboard.putBoolean("TestMode", false);
     }
@@ -135,4 +133,5 @@ public class Robot extends IterativeRobot {
         shooter.log();
         climber.log();
     }
+
 }

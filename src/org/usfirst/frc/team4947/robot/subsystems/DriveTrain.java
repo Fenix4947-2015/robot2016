@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
     
-	private final static double ROTATE_OFFSET = 0.05;
+	private final static double ROTATE_OFFSET = 0.08;
 	
 	private AnalogGyro gyro = new AnalogGyro(0);
     
@@ -28,11 +28,13 @@ public class DriveTrain extends Subsystem {
 	private RobotDrive robotDrive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     public DriveTrain(){
-    	robotDrive.setSafetyEnabled(true);
-    	robotDrive.setExpiration(0.1);
+    	//robotDrive.setSafetyEnabled(true);
+    	robotDrive.setExpiration(0.250);
     	
-    	gyro.initGyro();
-    	gyro.calibrate();
+    	System.out.println("Init DriveTrain");
+    	
+    	//gyro.initGyro();
+    	//gyro.calibrate();
     	
     	robotDrive.setInvertedMotor(MotorType.kRearRight, true);
     	robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
@@ -52,7 +54,7 @@ public class DriveTrain extends Subsystem {
     }
     
     public void initDefaultCommand() {
-        setDefaultCommand(new DriveStop());
+        setDefaultCommand(new DriveArcade());
     }
     
     public void arcadeDrive(double moveValue, double rotateValue){

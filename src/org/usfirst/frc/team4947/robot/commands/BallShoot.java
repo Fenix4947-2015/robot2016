@@ -9,9 +9,9 @@ public class BallShoot extends CommandGroup {
     
     public  BallShoot() {
     	//addSequential(new CannonRelease(false));
-    	addSequential(new ShooterStart(), 2);
+    	addSequential(new ShooterStart(), 1.0);
     	addSequential(new CannonRelease(true));
-    	addSequential(new ShooterStart(), 1);
+    	addSequential(new ShooterStart(), 0.5);
         addSequential(new ShooterStop());
     }
 }

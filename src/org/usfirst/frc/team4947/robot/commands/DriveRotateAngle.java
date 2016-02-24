@@ -7,37 +7,56 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveRotate extends Command {
+public class DriveRotateAngle extends Command {
 
-	private double speed;
-	private double timeout;
+	private final double TOLERANCE = 1.0;
+	private final double KP = -1.0 / 5.0;
 	
-    public DriveRotate(double speed, double timeout) {
+	private double error;
+	private double angle;
+	private double speed;
+	
+    public DriveRotateAngle(double angle, double speed) {
         requires(Robot.driveTrain);
         
+        this.angle = angle;
         this.speed = speed;
-        this.timeout = timeout;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(timeout);
+    	Robot.driveTrain.resetAngle();
+    	
+    	// Reverse the speed if not in the direction of the angle
+    	if((angle < 0 && speed > 0) || (angle > 0 && speed < 0)){
+    		speed = -speed;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.tankDrive(-speed, speed);
+		error = (angle - Robot.driveTrain.getAngle());
+		
+		Robot.driveTrain.arcadeDrive(0, speed);
+		
+		/*
+		if (speed * KP * error >= speed) {
+			Robot.driveTrain.arcadeDrive(0, speed);
+		} 
+		else {
+			Robot.driveTrain.arcadeDrive(0, speed * KP * error);
+		}
+		*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+    	return Math.abs(error) <= TOLERANCE;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	// Stop the robot when interrupted
-    	Robot.driveTrain.tankDrive(0, 0);
+    	Robot.driveTrain.tankDrive(0,  0);
     }
 
     // Called when another command which requires one or more of the same

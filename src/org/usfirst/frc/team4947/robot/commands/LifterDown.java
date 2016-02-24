@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4947.robot.commands;
 
 import org.usfirst.frc.team4947.robot.Robot;
-import org.usfirst.frc.team4947.robot.OI.XBoxAxis;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,9 +8,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class LifterDown extends Command {
-
-    public LifterDown() {
+	private double speed;
+	
+    public LifterDown(double speed) {
         requires(Robot.lifter);
+        
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +22,7 @@ public class LifterDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.setLifterSpeed(0.4);
+    	Robot.lifter.setLifterSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

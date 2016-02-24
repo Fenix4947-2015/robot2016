@@ -4,7 +4,6 @@ import org.usfirst.frc.team4947.robot.commands.LifterManual;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -15,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Lifter extends PIDSubsystem {
     
-	private final static double MAX_SPEED = 0.5;
+	private final static double MAX_SPEED = 0.6;
 	
 	public final static int POSITION_HIGH = 0;
 	public final static int POSITION_LOW = 580000;
@@ -64,13 +63,11 @@ public class Lifter extends PIDSubsystem {
 
 	@Override
 	protected double returnPIDInput() {
-    	SmartDashboard.putNumber("Lifter Input", returnPIDInput());
 		return lifterMotor.getPosition();
 	}
 
 	@Override
 	protected void usePIDOutput(double output) {
-    	SmartDashboard.putNumber("Lifter Output", output);
 		output = limitSpeed(output);
 		lifterMotor.set(output);
 	}
@@ -79,9 +76,9 @@ public class Lifter extends PIDSubsystem {
     	if(speed > MAX_SPEED){
     		speed = MAX_SPEED;
     	}
-    	else if(speed < -MAX_SPEED){
-    		speed = -MAX_SPEED;
-    	}
+    	//if(speed < -MAX_SPEED){
+    	//	speed = -MAX_SPEED;
+    	//}
     	
     	return speed;
 	}
