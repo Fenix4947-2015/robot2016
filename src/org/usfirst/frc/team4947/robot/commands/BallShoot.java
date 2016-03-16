@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class BallShoot extends CommandGroup {
     
-    public  BallShoot() {
+    public BallShoot() {
     	//addSequential(new CannonRelease(false));
     	addSequential(new ShooterStart(), 1.0);
     	addSequential(new CannonRelease(true));

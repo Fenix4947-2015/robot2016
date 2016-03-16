@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class LifterDown extends Command {
+public class LifterUpDown extends Command {
 	private double speed;
 	
-    public LifterDown(double speed) {
+    public LifterUpDown(double speed) {
         requires(Robot.lifter);
         
         this.speed = speed;
@@ -27,7 +27,12 @@ public class LifterDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.lifter.getUpLimit();
+    	if(speed >= 0){
+    		return Robot.lifter.getUpLimit();
+    	}
+    	else{
+    		return Robot.lifter.getDownLimit();
+    	}
     }
 
     // Called once after isFinished returns true

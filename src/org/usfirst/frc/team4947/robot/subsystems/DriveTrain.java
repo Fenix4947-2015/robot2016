@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,6 +26,12 @@ public class DriveTrain extends Subsystem {
 	public CANTalon rearLeftMotor = new CANTalon(1);		// Encoder
 	public CANTalon frontLeftMotor = new CANTalon(8);
 		
+	// For test on mecanum base
+//	public Talon rearRightMotor = new Talon(8);
+//	public Talon frontRightMotor = new Talon(9);
+//	public Talon rearLeftMotor = new Talon(7);
+//	public Talon frontLeftMotor = new Talon(6);
+	
 	private RobotDrive robotDrive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     public DriveTrain(){
@@ -66,7 +73,9 @@ public class DriveTrain extends Subsystem {
     		rotateValue = rotateValue + ROTATE_OFFSET;
     	}
     	
-		robotDrive.arcadeDrive(moveValue, rotateValue);
+    	robotDrive.arcadeDrive(moveValue, rotateValue);
+		// For test on mecanum base
+    	//robotDrive.arcadeDrive(-moveValue, -rotateValue);
     }
     
     public void tankDrive(double leftValue, double rightValue){
@@ -79,6 +88,11 @@ public class DriveTrain extends Subsystem {
     
     public double getAngle(){
     	return gyro.getAngle();
+    }
+    
+    public void calibGyro(){
+    	gyro.initGyro();
+    	gyro.calibrate();
     }
     
 	public double getPosition() {

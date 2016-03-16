@@ -4,7 +4,6 @@ import org.usfirst.frc.team4947.robot.commands.LifterManual;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,10 +20,10 @@ public class Lifter extends PIDSubsystem {
 	public final static int POSITION_CLIMB = 400000;
 	
     private CANTalon lifterMotor = new CANTalon(4);
-    
-    private DigitalInput di = new DigitalInput(0);
+	// For test on mecanum base
+    //private CANTalon lifterMotor = new CANTalon(0);
 
-    public Lifter(){
+	public Lifter(){
     	super(4, 0, 0);
     	
     	lifterMotor.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -73,12 +72,12 @@ public class Lifter extends PIDSubsystem {
 	}
 	
 	private double limitSpeed(double speed){
-    	if(speed > MAX_SPEED){
-    		speed = MAX_SPEED;
-    	}
-    	//if(speed < -MAX_SPEED){
-    	//	speed = -MAX_SPEED;
+    	//if(speed > MAX_SPEED){
+    	//	speed = MAX_SPEED;
     	//}
+    	if(speed < -MAX_SPEED){
+    		speed = -MAX_SPEED;
+    	}
     	
     	return speed;
 	}

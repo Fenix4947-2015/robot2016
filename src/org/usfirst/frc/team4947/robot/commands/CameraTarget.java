@@ -6,10 +6,13 @@ import java.util.List;
 import org.usfirst.frc.team4947.robot.Robot;
 
 import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.ImageType;
+import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,13 +39,13 @@ public class CameraTarget extends Command {
 		}
 	};
 	
-	private final static double TOLERANCE = 0.75;
+	private final static double TOLERANCE = 2.75;
 	
-	private NIVision.Range hueRange = new NIVision.Range(100, 160);
+	private NIVision.Range hueRange = new NIVision.Range(220, 255);
 	private NIVision.Range satRange = new NIVision.Range(0, 255);
 	private NIVision.Range valRange = new NIVision.Range(80, 255);
 	private float areaMin = 200;
-	private float areaMax = 2000; 
+	private float areaMax = 5000; 
 	private int particleIndex = -1;
 
 	private NIVision.ParticleFilterCriteria2 criteria[] = new NIVision.ParticleFilterCriteria2[1];
@@ -52,7 +55,7 @@ public class CameraTarget extends Command {
 	private Image binaryFrame;
 
 	private double areaRatio = 3;		// AreaRatio is  240 / 80 = 3
-	private double aspectRatio = 1.667;	// AspectRation is 20 x 12, so 1.667
+	private double aspectRatio = 1.42;	// AspectRation is 20 x 14, so 1.42
 
 	private int numParticles;
 	private int imageWidth = 320;
@@ -62,20 +65,7 @@ public class CameraTarget extends Command {
 	
     public CameraTarget() {
     	requires(Robot.camera);
-    }
-
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	Robot.camera.setTargetExposure();
     	
-    	frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
-		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
-		
-		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_CONVEX_HULL_AREA, areaMin, areaMax, 0, 0);
-		
-		Robot.camera.targetFound = false;
-    	Robot.camera.targetAngle = 0;
-
 		// Put default values to SmartDashboard so fields will appear
 		SmartDashboard.putNumber("Hue min", hueRange.minValue);
 		SmartDashboard.putNumber("Hue max", hueRange.maxValue);
@@ -89,8 +79,22 @@ public class CameraTarget extends Command {
 		SmartDashboard.putBoolean("BinaryImage", false);
     }
 
+    // Called just before this Command runs the first time
+    protected void initialize() {
+    	Robot.camera.setTargetExposure();
+    	
+    	frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
+		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
+		
+		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_CONVEX_HULL_AREA, areaMin, areaMax, 0, 0);
+		
+		Robot.camera.targetFound = false;
+    	Robot.camera.targetAngle = 0;
+    }
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.camera.targetFound = false;
     	Robot.camera.getCamera().getImage(frame);
 		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, hueRange, satRange, valRange);
 		
@@ -110,9 +114,6 @@ public class CameraTarget extends Command {
 			areaMax = (float)SmartDashboard.getNumber("Area max", areaMax);
 			criteria[0].lower = areaMin;
 			criteria[0].upper = areaMax;
-		}
-		else{
-			CameraServer.getInstance().setImage(frame);
 		}
 		
 		//Send particle count to dashboard
@@ -179,6 +180,9 @@ public class CameraTarget extends Command {
 				int height = (int)(bestParticule.Bottom - bestParticule.Top);
 				int width = (int)(bestParticule.Right - bestParticule.Left);
 	
+		        NIVision.Rect rect = new NIVision.Rect(top, left, height, width);
+		        NIVision.imaqDrawShapeOnImage(frame, frame, rect, DrawMode.DRAW_INVERT, ShapeMode.SHAPE_RECT, 0.0f);
+		        
 		        int rectCenterX = left + (width / 2);
 		        int rectCenterY = top + (height / 2);
 		        
@@ -197,19 +201,50 @@ public class CameraTarget extends Command {
 			}
     	}
 		
+		if(!binaryImage){
+			CameraServer.getInstance().setImage(frame);
+		}
+		
+		if(Robot.camera.targetFound){
+			Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.5f);
+			Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.5f);
+		}
+		else{
+			Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.0f);
+			Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.0f);
+		}
+		
 		SmartDashboard.putBoolean("TargetFound", Robot.camera.targetFound);
     }
     
     private double computeDistance(ParticleInfo partInfo) {
-		double viewAngle = 42.2;
-		
-		double targetWidthPixel = partInfo.Width;
-		double targetWidthInch = 20.0;
-		
-		double imageWidthPixel = imageWidth;
-		
-		double distance = targetWidthInch * imageWidthPixel / (targetWidthPixel * Math.tan(Math.toRadians(viewAngle)));
+		//double viewAngle = 41.8;
+    	double viewAngle = 34.0;
     	
+		//double targetWidthPixel = partInfo.Width;
+		double targetHeightPixel = partInfo.Height;
+		double targetWidthInch = 20.0;
+		double targetHeightInch = 14.0;
+		
+		//double imageWidthPixel = imageWidth;
+		double imageHeightPixel = imageHeight;
+		
+		//double distance = targetWidthInch * imageWidthPixel / (targetWidthPixel * Math.tan(Math.toRadians(viewAngle)));
+		double distance = targetHeightInch * imageHeightPixel / (targetHeightPixel * Math.tan(Math.toRadians(viewAngle)));
+
+		// We adjust the distance to the middle of the target according to the actual skew angle of the target
+    	// At 0 degree the ratio is 1.42 and at 45 degree the ratio is 1. So m = 0.0093333
+    	double targetAngle = (partInfo.AspectRatio - aspectRatio) / -0.00933333;
+    	double distanceAdjust = Math.sin(Math.toRadians(targetAngle)) * targetWidthInch / 2;
+    	
+    	//SmartDashboard.putNumber("TargetDistanceAdjust", distanceAdjust);
+    	
+    	distance = distance + distanceAdjust;
+    	
+    	// The target is 7'1'' from the floor so we use Pythagore to compute the projected distance on the floor
+    	//double targetToFloorInch = 73.0;
+    	double targetToFloorInch = 0.0;
+    	distance = Math.sqrt(Math.pow(distance,  2) - Math.pow(targetToFloorInch, 2));
 		return distance;
 	}
     
@@ -218,27 +253,36 @@ public class CameraTarget extends Command {
 		double targetWidthInch = 20.0;
 		
 		// consider distance between camera and robot center line
-		double offsetCamInch = 6.25;
+		//double offsetCamInch = 6.25;
+		double offsetCamInch = 7.5;
 		double offsetInch = offsetPixel * targetWidthInch / targetWidthPixel - offsetCamInch;
 		
 		// offset distanceInch by distance between shooter and center of rotation
-		distanceInch = distanceInch + 9.0; 
+		//distanceInch = distanceInch + 9.0; 
 		double angle = Math.toDegrees(Math.atan(offsetInch / distanceInch));
 		
+		distanceInch = distanceInch + 21.0; 
+		double corrAngle = Math.toDegrees(Math.atan(offsetInch / distanceInch));
+		
+		SmartDashboard.putNumber("TargetAngleCorr", corrAngle);
+	
 		return angle;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return !Robot.testMode && Robot.camera.targetFound;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+		Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.0f);
+		Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.0f);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
