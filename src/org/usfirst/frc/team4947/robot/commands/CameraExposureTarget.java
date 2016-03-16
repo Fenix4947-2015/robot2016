@@ -23,7 +23,7 @@ public class CameraExposureTarget extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
-    	Robot.camera.setDefaultExposure();
+    	Robot.camera.setTargetExposure();
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -55,7 +55,7 @@ public class CameraTarget extends Command {
 	private Image binaryFrame;
 
 	private double areaRatio = 3;		// AreaRatio is  240 / 80 = 3
-	private double aspectRatio = 1.42;	// AspectRation is 20 x 14, so 1.42
+	private double aspectRatio = 1.667;	// AspectRation is 20 x 12, so 1.42
 
 	private int numParticles;
 	private int imageWidth = 320;
@@ -81,7 +81,7 @@ public class CameraTarget extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.camera.setTargetExposure();
+    	//Robot.camera.setTargetExposure();
     	
     	frame = NIVision.imaqCreateImage(ImageType.IMAGE_RGB, 0);
 		binaryFrame = NIVision.imaqCreateImage(ImageType.IMAGE_U8, 0);
@@ -224,7 +224,7 @@ public class CameraTarget extends Command {
 		//double targetWidthPixel = partInfo.Width;
 		double targetHeightPixel = partInfo.Height;
 		double targetWidthInch = 20.0;
-		double targetHeightInch = 14.0;
+		double targetHeightInch = 12.0;
 		
 		//double imageWidthPixel = imageWidth;
 		double imageHeightPixel = imageHeight;
@@ -233,8 +233,8 @@ public class CameraTarget extends Command {
 		double distance = targetHeightInch * imageHeightPixel / (targetHeightPixel * Math.tan(Math.toRadians(viewAngle)));
 
 		// We adjust the distance to the middle of the target according to the actual skew angle of the target
-    	// At 0 degree the ratio is 1.42 and at 45 degree the ratio is 1. So m = 0.0093333
-    	double targetAngle = (partInfo.AspectRatio - aspectRatio) / -0.00933333;
+    	// At 0 degree the ratio is 1.66 and at 45 degree the ratio is 1.18 So m = 0.010666
+    	double targetAngle = (partInfo.AspectRatio - aspectRatio) / -0.010666;
     	double distanceAdjust = Math.sin(Math.toRadians(targetAngle)) * targetWidthInch / 2;
     	
     	//SmartDashboard.putNumber("TargetDistanceAdjust", distanceAdjust);
@@ -242,8 +242,8 @@ public class CameraTarget extends Command {
     	distance = distance + distanceAdjust;
     	
     	// The target is 7'1'' from the floor so we use Pythagore to compute the projected distance on the floor
-    	//double targetToFloorInch = 73.0;
-    	double targetToFloorInch = 0.0;
+    	double targetToFloorInch = 73.0;
+    	//double targetToFloorInch = 33.0;
     	distance = Math.sqrt(Math.pow(distance,  2) - Math.pow(targetToFloorInch, 2));
 		return distance;
 	}
@@ -253,19 +253,15 @@ public class CameraTarget extends Command {
 		double targetWidthInch = 20.0;
 		
 		// consider distance between camera and robot center line
-		//double offsetCamInch = 6.25;
-		double offsetCamInch = 7.5;
+		double offsetCamInch = 6.25;
+		//double offsetCamInch = 7.5;
 		double offsetInch = offsetPixel * targetWidthInch / targetWidthPixel - offsetCamInch;
 		
 		// offset distanceInch by distance between shooter and center of rotation
-		//distanceInch = distanceInch + 9.0; 
+		distanceInch = distanceInch + 9.0; 
+		//distanceInch = distanceInch + 11.0;
 		double angle = Math.toDegrees(Math.atan(offsetInch / distanceInch));
 		
-		distanceInch = distanceInch + 21.0; 
-		double corrAngle = Math.toDegrees(Math.atan(offsetInch / distanceInch));
-		
-		SmartDashboard.putNumber("TargetAngleCorr", corrAngle);
-	
 		return angle;
     }
 

@@ -17,6 +17,7 @@ import org.usfirst.frc.team4947.robot.commands.DriveArcade;
 import org.usfirst.frc.team4947.robot.commands.DriveCalibGyro;
 import org.usfirst.frc.team4947.robot.commands.DriveDistance;
 import org.usfirst.frc.team4947.robot.commands.DriveForward;
+import org.usfirst.frc.team4947.robot.commands.DriveKickDoor;
 import org.usfirst.frc.team4947.robot.commands.DriveResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.DriveRotate;
 import org.usfirst.frc.team4947.robot.commands.DriveRotateAngle;
@@ -26,7 +27,7 @@ import org.usfirst.frc.team4947.robot.commands.DriveTarget;
 import org.usfirst.frc.team4947.robot.commands.IntakeInOut;
 import org.usfirst.frc.team4947.robot.commands.IntakeManual;
 import org.usfirst.frc.team4947.robot.commands.IntakeStop;
-import org.usfirst.frc.team4947.robot.commands.LifterKickDown;
+import org.usfirst.frc.team4947.robot.commands.LifterKickDoor;
 import org.usfirst.frc.team4947.robot.commands.LifterManual;
 import org.usfirst.frc.team4947.robot.commands.LifterResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.LifterStop;
@@ -110,10 +111,10 @@ public class OI {
         JoystickButton helperStart = new JoystickButton(joystickHelper, XBoxButton.Start.getValue());
 
         // TODO Link button state to execute commands
-        //driverX.whenPressed(new RobotDeliverStack());
         driverA.whileHeld(new BallPickUp());
         driverB.whileHeld(new BallShoot());
-        driverX.whileHeld(new BallAlign());
+        driverX.whenPressed(new BallAlign());
+        driverY.whenPressed(new LifterUpDown(1.0));
         
         driverB.whenReleased(new CannonRelease(false));
         driverLB.whenPressed(new CannonPosition(false));
@@ -140,6 +141,7 @@ public class OI {
         SmartDashboard.putData("DriveRotate+0.5", new DriveRotate(0.5, 0.5));
         SmartDashboard.putData("DriveRotate-0.5", new DriveRotate(-0.5, 0.5));
         SmartDashboard.putData("DriveCalibGyro", new DriveCalibGyro());
+        SmartDashboard.putData("DriveKickDoor", new DriveKickDoor());
         
         SmartDashboard.putData("IntakeStop", new IntakeStop());
         SmartDashboard.putData("IntakeIn", new IntakeInOut(0.5));
@@ -154,7 +156,7 @@ public class OI {
         //SmartDashboard.putData("LifterPositionClimb", new LifterPosition(Lifter.POSITION_CLIMB));
         SmartDashboard.putData("LifterUp", new LifterUpDown(1.0));
         SmartDashboard.putData("LifterDown", new LifterUpDown(-1.0));
-        SmartDashboard.putData("LifterKickDown", new LifterKickDown());
+        SmartDashboard.putData("LifterKickDoor", new LifterKickDoor());
         
         SmartDashboard.putData("ShooterStart", new ShooterStart());
         SmartDashboard.putData("ShooterStop", new ShooterStop());

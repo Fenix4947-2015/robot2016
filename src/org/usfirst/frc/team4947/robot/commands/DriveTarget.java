@@ -20,7 +20,6 @@ public class DriveTarget extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,8 +36,9 @@ public class DriveTarget extends Command {
 			rotateValue = 0;
 		}
 		
-		Robot.driveTrain.tankDrive(rotateValue, -rotateValue);
-		//Robot.driveTrain.tankDrive(-rotateValue, rotateValue);
+		// For test on mecanum base
+		//Robot.driveTrain.tankDrive(rotateValue, -rotateValue);
+		Robot.driveTrain.tankDrive(-rotateValue, rotateValue);
     }
  
     // Make this return true when this Command no longer needs to run execute()

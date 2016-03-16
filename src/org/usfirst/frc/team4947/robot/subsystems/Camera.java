@@ -42,8 +42,8 @@ public class Camera extends Subsystem {
     
     public boolean isOnTarget(boolean canOvershoot){
     	double actualAngle = Robot.driveTrain.getAngle();
-    	boolean isOnTarget = true;
-    	boolean isOvershootTarget = true;
+    	boolean isOnTarget = false;
+    	boolean isOvershootTarget = false;
 
     	if(targetFound){
 	    	if(targetAngle > 0){

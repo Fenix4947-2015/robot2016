@@ -38,10 +38,9 @@ public class DriveTrain extends Subsystem {
     	//robotDrive.setSafetyEnabled(true);
     	robotDrive.setExpiration(0.250);
     	
-    	System.out.println("Init DriveTrain");
-    	
-    	//gyro.initGyro();
-    	//gyro.calibrate();
+    	// TODO See if this works to calibrate the gyro
+    	gyro.initGyro();
+    	gyro.calibrate();
     	
     	robotDrive.setInvertedMotor(MotorType.kRearRight, true);
     	robotDrive.setInvertedMotor(MotorType.kFrontRight, true);
@@ -73,9 +72,9 @@ public class DriveTrain extends Subsystem {
     		rotateValue = rotateValue + ROTATE_OFFSET;
     	}
     	
-    	robotDrive.arcadeDrive(moveValue, rotateValue);
+    	//robotDrive.arcadeDrive(moveValue, rotateValue);
 		// For test on mecanum base
-    	//robotDrive.arcadeDrive(-moveValue, -rotateValue);
+    	robotDrive.arcadeDrive(-moveValue, -rotateValue);
     }
     
     public void tankDrive(double leftValue, double rightValue){

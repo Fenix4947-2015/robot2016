@@ -3,6 +3,8 @@ package org.usfirst.frc.team4947.robot.commands;
 import org.usfirst.frc.team4947.robot.Robot;
 
 import com.ni.vision.NIVision;
+import com.ni.vision.NIVision.Point;
+import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.ImageType;
 
@@ -29,6 +31,10 @@ public class CameraExposureDefault extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.camera.getCamera().getImage(frame);
+    	
+        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(140, 120), new Point(180,  120), 250.0f);
+        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(160, 100), new Point(160,  140), 250.0f);
+    	
     	CameraServer.getInstance().setImage(frame);
     }
 

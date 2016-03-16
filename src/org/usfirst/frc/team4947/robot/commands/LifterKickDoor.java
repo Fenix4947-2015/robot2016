@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LifterKickDown extends CommandGroup {
+public class LifterKickDoor extends CommandGroup {
     
-    public  LifterKickDown() {
+    public  LifterKickDoor() {
         addSequential(new LifterUpDown(-1.0));
         addSequential(new LifterUpDown(1.0), 0.25);
         addSequential(new LifterUpDown(-1.0));
