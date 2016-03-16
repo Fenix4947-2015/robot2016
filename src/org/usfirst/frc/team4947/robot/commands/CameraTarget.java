@@ -41,9 +41,13 @@ public class CameraTarget extends Command {
 	
 	private final static double TOLERANCE = 2.75;
 	
-	private NIVision.Range hueRange = new NIVision.Range(220, 255);
+	private NIVision.Range hueRange = new NIVision.Range(100, 160);
 	private NIVision.Range satRange = new NIVision.Range(0, 255);
 	private NIVision.Range valRange = new NIVision.Range(80, 255);
+	// For mecanum base test
+//	private NIVision.Range hueRange = new NIVision.Range(220, 255);
+//	private NIVision.Range satRange = new NIVision.Range(0, 255);
+//	private NIVision.Range valRange = new NIVision.Range(80, 255);
 	private float areaMin = 200;
 	private float areaMax = 5000; 
 	private int particleIndex = -1;
@@ -219,7 +223,8 @@ public class CameraTarget extends Command {
     
     private double computeDistance(ParticleInfo partInfo) {
 		//double viewAngle = 41.8;
-    	double viewAngle = 34.0;
+    	//double viewAngle = 34.0;
+    	double viewAngle = 32.0;
     	
 		//double targetWidthPixel = partInfo.Width;
 		double targetHeightPixel = partInfo.Height;

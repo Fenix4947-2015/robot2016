@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTarget extends Command {
 	double rotateValue = 0;
-	double speed = 0.45;
+	double speed = 0.35;
     
     public DriveTarget() {
     	requires(Robot.driveTrain);

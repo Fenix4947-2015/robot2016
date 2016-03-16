@@ -22,12 +22,12 @@ public class LifterUpDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.lifter.setLifterSpeed(speed);
+    	Robot.lifter.setLifterSpeed(-speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(speed >= 0){
+    	if(speed <= 0){
     		return Robot.lifter.getUpLimit();
     	}
     	else{

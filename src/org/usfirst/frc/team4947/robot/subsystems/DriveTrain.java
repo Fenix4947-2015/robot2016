@@ -72,9 +72,9 @@ public class DriveTrain extends Subsystem {
     		rotateValue = rotateValue + ROTATE_OFFSET;
     	}
     	
-    	//robotDrive.arcadeDrive(moveValue, rotateValue);
+    	robotDrive.arcadeDrive(moveValue, rotateValue);
 		// For test on mecanum base
-    	robotDrive.arcadeDrive(-moveValue, -rotateValue);
+    	//robotDrive.arcadeDrive(-moveValue, -rotateValue);
     }
     
     public void tankDrive(double leftValue, double rightValue){

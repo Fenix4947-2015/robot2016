@@ -72,12 +72,12 @@ public class Lifter extends PIDSubsystem {
 	}
 	
 	private double limitSpeed(double speed){
-    	//if(speed > MAX_SPEED){
-    	//	speed = MAX_SPEED;
-    	//}
-    	if(speed < -MAX_SPEED){
-    		speed = -MAX_SPEED;
+    	if(speed > MAX_SPEED){
+    		speed = MAX_SPEED;
     	}
+//    	if(speed < -MAX_SPEED){
+//    		speed = -MAX_SPEED;
+//    	}
     	
     	return speed;
 	}
