@@ -30,12 +30,18 @@ public class CameraExposureDefault extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.camera.getCamera().getImage(frame);
+    	try{
+	    	Robot.camera.getCamera().getImage(frame);
+	    	
+	        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(140, 120), new Point(180,  120), 250.0f);
+	        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(160, 100), new Point(160,  140), 250.0f);
+	    	
+	    	CameraServer.getInstance().setImage(frame);
+    	}
+    	catch(Exception e){
+    		
+    	}
     	
-        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(140, 120), new Point(180,  120), 250.0f);
-        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(160, 100), new Point(160,  140), 250.0f);
-    	
-    	CameraServer.getInstance().setImage(frame);
     }
 
     // Make this return true when this Command no longer needs to run execute()

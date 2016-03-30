@@ -40,6 +40,7 @@ public class CameraTarget extends Command {
 	};
 	
 	private final static double TOLERANCE = 2.75;
+	private final static double TIMEOUT = 2.0;
 	
 	private NIVision.Range hueRange = new NIVision.Range(100, 160);
 	private NIVision.Range satRange = new NIVision.Range(0, 255);
@@ -94,131 +95,138 @@ public class CameraTarget extends Command {
 		
 		Robot.camera.targetFound = false;
     	Robot.camera.targetAngle = 0;
+    	
+    	setTimeout(TIMEOUT);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.camera.targetFound = false;
-    	Robot.camera.getCamera().getImage(frame);
-		NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, hueRange, satRange, valRange);
-		
-		boolean binaryImage = SmartDashboard.getBoolean("BinaryImage");
-		if(binaryImage){
-			CameraServer.getInstance().setImage(binaryFrame);
+    	try{
+	    	Robot.camera.targetFound = false;
+	    	Robot.camera.getCamera().getImage(frame);
+			NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, hueRange, satRange, valRange);
 			
-			// Update threshold values from SmartDashboard. 
-			// For performance reasons it is recommended to remove this after calibration is finished.
-			hueRange.minValue = (int)SmartDashboard.getNumber("Hue min", hueRange.minValue);
-			hueRange.maxValue = (int)SmartDashboard.getNumber("Hue max", hueRange.maxValue);
-			satRange.minValue = (int)SmartDashboard.getNumber("Sat min", satRange.minValue);
-			satRange.maxValue = (int)SmartDashboard.getNumber("Sat max", satRange.maxValue);
-			valRange.minValue = (int)SmartDashboard.getNumber("Val min", valRange.minValue);
-			valRange.maxValue = (int)SmartDashboard.getNumber("Val max", valRange.maxValue);
-			areaMin = (float)SmartDashboard.getNumber("Area min", areaMin);
-			areaMax = (float)SmartDashboard.getNumber("Area max", areaMax);
-			criteria[0].lower = areaMin;
-			criteria[0].upper = areaMax;
-		}
-		
-		//Send particle count to dashboard
-		numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
-		SmartDashboard.putNumber("Unfiltered particles", numParticles);
-
-		//filter out small particles
-		NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null);
-		
-		//Send particle count after filtering to dashboard
-		numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
-		SmartDashboard.putNumber("Filtered particles", numParticles);
-		particleIndex = (int)SmartDashboard.getNumber("Particle index", particleIndex);
-		
-		if(numParticles > 0)
-		{
-			//Measure particles and sort by particle size
-			List<ParticleInfo> particles = new ArrayList<ParticleInfo>();
-			for(int i = 0; i < numParticles; i++)
+			boolean binaryImage = SmartDashboard.getBoolean("BinaryImage");
+			if(binaryImage){
+				CameraServer.getInstance().setImage(binaryFrame);
+				
+				// Update threshold values from SmartDashboard. 
+				// For performance reasons it is recommended to remove this after calibration is finished.
+				hueRange.minValue = (int)SmartDashboard.getNumber("Hue min", hueRange.minValue);
+				hueRange.maxValue = (int)SmartDashboard.getNumber("Hue max", hueRange.maxValue);
+				satRange.minValue = (int)SmartDashboard.getNumber("Sat min", satRange.minValue);
+				satRange.maxValue = (int)SmartDashboard.getNumber("Sat max", satRange.maxValue);
+				valRange.minValue = (int)SmartDashboard.getNumber("Val min", valRange.minValue);
+				valRange.maxValue = (int)SmartDashboard.getNumber("Val max", valRange.maxValue);
+				areaMin = (float)SmartDashboard.getNumber("Area min", areaMin);
+				areaMax = (float)SmartDashboard.getNumber("Area max", areaMax);
+				criteria[0].lower = areaMin;
+				criteria[0].upper = areaMax;
+			}
+			
+			//Send particle count to dashboard
+			numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
+			SmartDashboard.putNumber("Unfiltered particles", numParticles);
+	
+			//filter out small particles
+			NIVision.imaqParticleFilter4(binaryFrame, binaryFrame, criteria, filterOptions, null);
+			
+			//Send particle count after filtering to dashboard
+			numParticles = NIVision.imaqCountParticles(binaryFrame, 1);
+			SmartDashboard.putNumber("Filtered particles", numParticles);
+			particleIndex = (int)SmartDashboard.getNumber("Particle index", particleIndex);
+			
+			if(numParticles > 0)
 			{
-				ParticleInfo par = new ParticleInfo();
-				par.Area = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_AREA);
-				par.ConvexHullArea = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_CONVEX_HULL_AREA);
-				par.AreaRatio = par.ConvexHullArea / par.Area;
-				par.Top = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
-				par.Left = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
-				par.Bottom = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
-				par.Right = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT);
-				par.Width = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
-				par.Height = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
-				par.AspectRatio = par.Width / par.Height;
-				
-				if(i == particleIndex){
-					SmartDashboard.putNumber("Area", par.Area);
-					SmartDashboard.putNumber("ConvexHullArea", par.ConvexHullArea);
-					SmartDashboard.putNumber("TargetWidth", par.Width);
-					SmartDashboard.putNumber("TargetHeight", par.Height);
-					SmartDashboard.putNumber("AreaRatio", par.AreaRatio);
-					SmartDashboard.putNumber("AspectRatio", par.AspectRatio);
+				//Measure particles and sort by particle size
+				List<ParticleInfo> particles = new ArrayList<ParticleInfo>();
+				for(int i = 0; i < numParticles; i++)
+				{
+					ParticleInfo par = new ParticleInfo();
+					par.Area = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_AREA);
+					par.ConvexHullArea = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_CONVEX_HULL_AREA);
+					par.AreaRatio = par.ConvexHullArea / par.Area;
+					par.Top = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
+					par.Left = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
+					par.Bottom = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
+					par.Right = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_RIGHT);
+					par.Width = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_WIDTH);
+					par.Height = NIVision.imaqMeasureParticle(binaryFrame, i, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_HEIGHT);
+					par.AspectRatio = par.Width / par.Height;
+					
+					if(i == particleIndex){
+						SmartDashboard.putNumber("Area", par.Area);
+						SmartDashboard.putNumber("ConvexHullArea", par.ConvexHullArea);
+						SmartDashboard.putNumber("TargetWidth", par.Width);
+						SmartDashboard.putNumber("TargetHeight", par.Height);
+						SmartDashboard.putNumber("AreaRatio", par.AreaRatio);
+						SmartDashboard.putNumber("AspectRatio", par.AspectRatio);
+					}
+					
+					// Make sure it looks like a target
+					if(Math.abs(par.AreaRatio - areaRatio) < TOLERANCE && Math.abs(par.AspectRatio - aspectRatio) < TOLERANCE){
+						particles.add(par);
+					}
 				}
+				particles.sort(null);
+				SmartDashboard.putNumber("Target particles", particles.size());
 				
-				// Make sure it looks like a target
-				if(Math.abs(par.AreaRatio - areaRatio) < TOLERANCE && Math.abs(par.AspectRatio - aspectRatio) < TOLERANCE){
-					particles.add(par);
+				if(particles.size() > 0){
+					ParticleInfo bestParticule = particles.get(0);
+		
+					if(particleIndex < 0){
+						SmartDashboard.putNumber("Area", bestParticule.Area);
+						SmartDashboard.putNumber("ConvexHullArea", bestParticule.ConvexHullArea);
+						SmartDashboard.putNumber("TargetWidth", bestParticule.Width);
+						SmartDashboard.putNumber("TargetHeight", bestParticule.Height);
+						SmartDashboard.putNumber("AreaRatio", bestParticule.AreaRatio);
+						SmartDashboard.putNumber("AspectRatio", bestParticule.AspectRatio);
+					}
+		
+					int top = (int)bestParticule.Top;
+					int left = (int)bestParticule.Left;
+					int height = (int)(bestParticule.Bottom - bestParticule.Top);
+					int width = (int)(bestParticule.Right - bestParticule.Left);
+		
+			        NIVision.Rect rect = new NIVision.Rect(top, left, height, width);
+			        NIVision.imaqDrawShapeOnImage(frame, frame, rect, DrawMode.DRAW_INVERT, ShapeMode.SHAPE_RECT, 0.0f);
+			        
+			        int rectCenterX = left + (width / 2);
+			        int rectCenterY = top + (height / 2);
+			        
+			        int offsetX = rectCenterX - imageCenterX;
+			        int offsetY = rectCenterY - imageCenterY;
+			        double targetDistance = computeDistance(bestParticule);
+			        Robot.camera.targetAngle = computeAngle(bestParticule, targetDistance, offsetX);
+			        Robot.driveTrain.resetAngle();
+			        
+			        Robot.camera.targetFound = true;
+	
+					SmartDashboard.putNumber("OffsetX", offsetX);
+					SmartDashboard.putNumber("OffsetY", offsetY);
+					SmartDashboard.putNumber("TargetDistance", targetDistance);
+					SmartDashboard.putNumber("TargetAngle", Robot.camera.targetAngle);
 				}
-			}
-			particles.sort(null);
-			SmartDashboard.putNumber("Target particles", particles.size());
+	    	}
 			
-			if(particles.size() > 0){
-				ParticleInfo bestParticule = particles.get(0);
-	
-				if(particleIndex < 0){
-					SmartDashboard.putNumber("Area", bestParticule.Area);
-					SmartDashboard.putNumber("ConvexHullArea", bestParticule.ConvexHullArea);
-					SmartDashboard.putNumber("TargetWidth", bestParticule.Width);
-					SmartDashboard.putNumber("TargetHeight", bestParticule.Height);
-					SmartDashboard.putNumber("AreaRatio", bestParticule.AreaRatio);
-					SmartDashboard.putNumber("AspectRatio", bestParticule.AspectRatio);
-				}
-	
-				int top = (int)bestParticule.Top;
-				int left = (int)bestParticule.Left;
-				int height = (int)(bestParticule.Bottom - bestParticule.Top);
-				int width = (int)(bestParticule.Right - bestParticule.Left);
-	
-		        NIVision.Rect rect = new NIVision.Rect(top, left, height, width);
-		        NIVision.imaqDrawShapeOnImage(frame, frame, rect, DrawMode.DRAW_INVERT, ShapeMode.SHAPE_RECT, 0.0f);
-		        
-		        int rectCenterX = left + (width / 2);
-		        int rectCenterY = top + (height / 2);
-		        
-		        int offsetX = rectCenterX - imageCenterX;
-		        int offsetY = rectCenterY - imageCenterY;
-		        double targetDistance = computeDistance(bestParticule);
-		        Robot.camera.targetAngle = computeAngle(bestParticule, targetDistance, offsetX);
-		        Robot.driveTrain.resetAngle();
-		        
-		        Robot.camera.targetFound = true;
-
-				SmartDashboard.putNumber("OffsetX", offsetX);
-				SmartDashboard.putNumber("OffsetY", offsetY);
-				SmartDashboard.putNumber("TargetDistance", targetDistance);
-				SmartDashboard.putNumber("TargetAngle", Robot.camera.targetAngle);
+			if(!binaryImage){
+				CameraServer.getInstance().setImage(frame);
 			}
+			
+			if(Robot.camera.targetFound){
+				Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.5f);
+				Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.5f);
+			}
+			else{
+				Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.0f);
+				Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.0f);
+			}
+			
+			SmartDashboard.putBoolean("TargetFound", Robot.camera.targetFound);
     	}
-		
-		if(!binaryImage){
-			CameraServer.getInstance().setImage(frame);
-		}
-		
-		if(Robot.camera.targetFound){
-			Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.5f);
-			Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.5f);
-		}
-		else{
-			Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.0f);
-			Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.0f);
-		}
-		
-		SmartDashboard.putBoolean("TargetFound", Robot.camera.targetFound);
+    	catch(Exception e){
+    		
+    	}
     }
     
     private double computeDistance(ParticleInfo partInfo) {
@@ -272,7 +280,7 @@ public class CameraTarget extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !Robot.testMode && Robot.camera.targetFound;
+        return !Robot.testMode && (Robot.camera.targetFound || isTimedOut());
     }
 
     // Called once after isFinished returns true

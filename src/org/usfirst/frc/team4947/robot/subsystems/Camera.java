@@ -18,8 +18,13 @@ public class Camera extends Subsystem {
     public boolean targetFound = false;
     
     public Camera(){
-        USBCamera = new USBCamera("cam0");
-        USBCamera.startCapture();
+    	try{
+	        USBCamera = new USBCamera("cam0");
+	        USBCamera.startCapture();
+    	}
+    	catch(Exception e){
+    		
+    	}
     }
     
     public void initDefaultCommand() {
@@ -27,13 +32,23 @@ public class Camera extends Subsystem {
     }
     
     public void setDefaultExposure(){
-       	USBCamera.setExposureAuto();
-    	USBCamera.setBrightness(50); 
+    	try{
+	       	USBCamera.setExposureAuto();
+	    	USBCamera.setBrightness(50);
+    	}
+    	catch(Exception e){
+    		
+    	}
     }
     
     public void setTargetExposure(){
-		USBCamera.setExposureManual(0);
-		USBCamera.setBrightness(0);
+    	try{
+			USBCamera.setExposureManual(0);
+			USBCamera.setBrightness(0);
+    	}
+    	catch(Exception e){
+    		
+    	}
     }
     
     public USBCamera getCamera(){
