@@ -42,13 +42,13 @@ public class CameraTarget extends Command {
 	private final static double TOLERANCE = 2.75;
 	private final static double TIMEOUT = 2.0;
 	
+	private final static double MIN_RANGE = 60.0;
+	private final static double MAX_RANGE = 216.0;
+	
 	private NIVision.Range hueRange = new NIVision.Range(100, 160);
 	private NIVision.Range satRange = new NIVision.Range(0, 255);
 	private NIVision.Range valRange = new NIVision.Range(80, 255);
-	// For mecanum base test
-//	private NIVision.Range hueRange = new NIVision.Range(220, 255);
-//	private NIVision.Range satRange = new NIVision.Range(0, 255);
-//	private NIVision.Range valRange = new NIVision.Range(80, 255);
+
 	private float areaMin = 200;
 	private float areaMax = 5000; 
 	private int particleIndex = -1;
@@ -94,6 +94,7 @@ public class CameraTarget extends Command {
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_CONVEX_HULL_AREA, areaMin, areaMax, 0, 0);
 		
 		Robot.camera.targetFound = false;
+		Robot.camera.targetInRange = false;
     	Robot.camera.targetAngle = 0;
     	
     	setTimeout(TIMEOUT);
@@ -103,6 +104,7 @@ public class CameraTarget extends Command {
     protected void execute() {
     	try{
 	    	Robot.camera.targetFound = false;
+	    	Robot.camera.targetInRange = false;
 	    	Robot.camera.getCamera().getImage(frame);
 			NIVision.imaqColorThreshold(binaryFrame, frame, 255, NIVision.ColorMode.HSV, hueRange, satRange, valRange);
 			
@@ -201,7 +203,8 @@ public class CameraTarget extends Command {
 			        Robot.driveTrain.resetAngle();
 			        
 			        Robot.camera.targetFound = true;
-	
+			        Robot.camera.targetInRange = targetDistance >= MIN_RANGE && targetDistance <= MAX_RANGE;
+			        
 					SmartDashboard.putNumber("OffsetX", offsetX);
 					SmartDashboard.putNumber("OffsetY", offsetY);
 					SmartDashboard.putNumber("TargetDistance", targetDistance);
@@ -213,7 +216,7 @@ public class CameraTarget extends Command {
 				CameraServer.getInstance().setImage(frame);
 			}
 			
-			if(Robot.camera.targetFound){
+			if(Robot.camera.targetFound && Robot.camera.targetInRange){
 				Robot.oi.setJoystickDriverRumble(RumbleType.kLeftRumble, 0.5f);
 				Robot.oi.setJoystickDriverRumble(RumbleType.kRightRumble, 0.5f);
 			}
@@ -223,6 +226,7 @@ public class CameraTarget extends Command {
 			}
 			
 			SmartDashboard.putBoolean("TargetFound", Robot.camera.targetFound);
+			SmartDashboard.putBoolean("TargetRange", Robot.camera.targetInRange);
     	}
     	catch(Exception e){
     		

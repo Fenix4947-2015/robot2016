@@ -16,6 +16,7 @@ public class Camera extends Subsystem {
     
     public double targetAngle = 0;
     public boolean targetFound = false;
+    public boolean targetInRange = false;
     
     public Camera(){
     	try{
@@ -60,7 +61,7 @@ public class Camera extends Subsystem {
     	boolean isOnTarget = false;
     	boolean isOvershootTarget = false;
 
-    	if(targetFound){
+    	if(targetFound && targetInRange){
 	    	if(targetAngle > 0){
 	    		isOnTarget = Math.abs(actualAngle - targetAngle) <= TARGET_ANGLE_TOLERANCE;
 	    		isOvershootTarget = actualAngle >= targetAngle;
