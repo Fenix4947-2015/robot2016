@@ -19,6 +19,8 @@ public class Shooter extends Subsystem {
     
     private DigitalInput ballPresentSwitch = new DigitalInput(0);
     
+    private Compressor compressor = new Compressor();
+    
     public double speed;
     
     public Shooter(){
@@ -44,7 +46,7 @@ public class Shooter extends Subsystem {
     }
     
     public void enableCompressor(boolean isEnabled){
-    	
+    	compressor.setClosedLoopControl(isEnabled);
     }
     
     public void log(){
