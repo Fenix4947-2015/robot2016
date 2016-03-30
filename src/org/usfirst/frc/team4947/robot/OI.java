@@ -148,8 +148,8 @@ public class OI {
         SmartDashboard.putData("DriveForward", new DriveForward(0.5));
         SmartDashboard.putData("DriveBackward", new DriveForward(-0.5));
         SmartDashboard.putData("DriveDistance", new DriveDistance(1));
-        SmartDashboard.putData("DriveRotateAngle+25", new DriveRotateAngle(25, 0.5));
-        SmartDashboard.putData("DriveRotateAngle-25", new DriveRotateAngle(-25, 0.5));
+        SmartDashboard.putData("DriveRotateAngle+25", new DriveRotateAngle(25, 0.5, true));
+        SmartDashboard.putData("DriveRotateAngle-25", new DriveRotateAngle(-25, 0.5, true));
         SmartDashboard.putData("DriveRotate+0.5", new DriveRotate(0.5, 0.5));
         SmartDashboard.putData("DriveRotate-0.5", new DriveRotate(-0.5, 0.5));
         SmartDashboard.putData("DriveCalibGyro", new DriveCalibGyro());

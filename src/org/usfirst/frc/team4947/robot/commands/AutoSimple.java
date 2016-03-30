@@ -17,7 +17,7 @@ public class AutoSimple extends CommandGroup {
    		addSequential(new CannonPosition(isCannonUp));
    		
    		addSequential(new DriveForward(forwardSpeed), forwardTime);
-   		addSequential(new DriveRotateAngle(rotateAngle, rotateSpeed));
+   		addSequential(new DriveRotateAngle(rotateAngle, rotateSpeed, false));
    		
    		if(isBallAlign && isBallShoot){
    			addSequential(new BallAlignShoot());

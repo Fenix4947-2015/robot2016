@@ -13,20 +13,26 @@ public class DriveRotateAngle extends Command {
 
 	private double angle;
 	private double speed;
+	private boolean resetAngle = false;
 	
-    public DriveRotateAngle(double angle, double speed) {
+    public DriveRotateAngle(double angle, double speed, boolean resetAngle) {
         requires(Robot.driveTrain);
         
         this.angle = angle;
         this.speed = speed;
+        this.resetAngle = resetAngle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.driveTrain.resetAngle();
+    	if(resetAngle){
+    		Robot.driveTrain.resetAngle();
+    	}
+
+    	double directionAngle = angle - Robot.driveTrain.getAngle(); 
     	
     	// Reverse the speed if not in the direction of the angle
-    	if((angle < 0 && speed > 0) || (angle > 0 && speed < 0)){
+    	if((directionAngle < 0 && speed > 0) || (directionAngle > 0 && speed < 0)){
     		speed = -speed;
     	}
     }
@@ -41,7 +47,7 @@ public class DriveRotateAngle extends Command {
     	boolean isFinished = false;
     	double actualAngle = Robot.driveTrain.getAngle();
     	
-    	if(angle >= 0){
+    	if(speed >= 0){
     		isFinished = Math.abs(actualAngle - angle) <= TOLERANCE || actualAngle >= angle;
     	}
     	else{
