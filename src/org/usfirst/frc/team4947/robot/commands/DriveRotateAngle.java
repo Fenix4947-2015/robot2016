@@ -10,9 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveRotateAngle extends Command {
 
 	private final double TOLERANCE = 1.0;
-	private final double KP = -1.0 / 5.0;
-	
-	private double error;
+
 	private double angle;
 	private double speed;
 	
@@ -35,28 +33,27 @@ public class DriveRotateAngle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		error = (angle - Robot.driveTrain.getAngle());
-		
 		Robot.driveTrain.arcadeDrive(0, speed);
-		
-		/*
-		if (speed * KP * error >= speed) {
-			Robot.driveTrain.arcadeDrive(0, speed);
-		} 
-		else {
-			Robot.driveTrain.arcadeDrive(0, speed * KP * error);
-		}
-		*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return Math.abs(error) <= TOLERANCE;
+    	boolean isFinished = false;
+    	double actualAngle = Robot.driveTrain.getAngle();
+    	
+    	if(angle >= 0){
+    		isFinished = Math.abs(actualAngle - angle) <= TOLERANCE || actualAngle >= angle;
+    	}
+    	else{
+    		isFinished = Math.abs(actualAngle - angle) <= TOLERANCE || actualAngle <= angle;
+    	}
+    	
+    	return isFinished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.tankDrive(0,  0);
+    	Robot.driveTrain.tankDrive(0, 0);
     }
 
     // Called when another command which requires one or more of the same
