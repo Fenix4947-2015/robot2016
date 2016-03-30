@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.BallAlign;
+import org.usfirst.frc.team4947.robot.commands.BallAlignShoot;
 import org.usfirst.frc.team4947.robot.commands.BallPickUp;
 import org.usfirst.frc.team4947.robot.commands.BallShoot;
 import org.usfirst.frc.team4947.robot.commands.CameraExposureDefault;
@@ -32,6 +33,7 @@ import org.usfirst.frc.team4947.robot.commands.LifterManual;
 import org.usfirst.frc.team4947.robot.commands.LifterResetEncoder;
 import org.usfirst.frc.team4947.robot.commands.LifterStop;
 import org.usfirst.frc.team4947.robot.commands.LifterUpDown;
+import org.usfirst.frc.team4947.robot.commands.ShooterEnableCompressor;
 import org.usfirst.frc.team4947.robot.commands.ShooterInOut;
 import org.usfirst.frc.team4947.robot.commands.ShooterManual;
 import org.usfirst.frc.team4947.robot.commands.ShooterStart;
@@ -74,7 +76,9 @@ public class OI {
 		LB(5),
 		RB(6),
 		Back(7),
-		Start(8);
+		Start(8),
+		LeftStick(9),
+		RightStick(10);
 
 		private int value;
 		XBoxButton(int value){
@@ -100,6 +104,8 @@ public class OI {
         JoystickButton driverRB = new JoystickButton(joystickDriver, XBoxButton.RB.getValue());
         JoystickButton driverBack = new JoystickButton(joystickDriver, XBoxButton.Back.getValue());
         JoystickButton driverStart = new JoystickButton(joystickDriver, XBoxButton.Start.getValue());
+        JoystickButton driverLeftStick = new JoystickButton(joystickDriver, XBoxButton.LeftStick.getValue());
+        JoystickButton driverRightStick = new JoystickButton(joystickDriver, XBoxButton.RightStick.getValue());
         
         JoystickButton helperA = new JoystickButton(joystickHelper, XBoxButton.A.getValue());
         JoystickButton helperB = new JoystickButton(joystickHelper, XBoxButton.B.getValue());
@@ -109,20 +115,26 @@ public class OI {
         JoystickButton helperRB = new JoystickButton(joystickHelper, XBoxButton.RB.getValue());
         JoystickButton helperBack = new JoystickButton(joystickHelper, XBoxButton.Back.getValue());
         JoystickButton helperStart = new JoystickButton(joystickHelper, XBoxButton.Start.getValue());
+        JoystickButton helperLeftStick = new JoystickButton(joystickHelper, XBoxButton.LeftStick.getValue());
+        JoystickButton helperRightStick = new JoystickButton(joystickHelper, XBoxButton.RightStick.getValue());
 
         // TODO Link button state to execute commands
         driverA.whileHeld(new BallPickUp());
-        driverB.whileHeld(new BallShoot());
-        driverX.whenPressed(new BallAlign());
+        //driverB.whileHeld(new BallShoot());
+        //driverX.whenPressed(new BallAlign());
+        driverX.whileHeld(new BallAlignShoot());
         driverY.whenPressed(new LifterUpDown(1.0));
-        
         driverB.whenReleased(new CannonRelease(false));
         driverLB.whenPressed(new CannonPosition(false));
         driverRB.whenPressed(new CannonPosition(true));
         
+        driverLeftStick.whenPressed(new DriveKickDoor());
+        driverRightStick.whenPressed(new LifterKickDoor());
+        
         SmartDashboard.putData("BallPickUp", new BallPickUp());
         SmartDashboard.putData("BallShoot", new BallShoot());
         SmartDashboard.putData("BallAlign", new BallAlign());
+        SmartDashboard.putData("BallAlignShoot", new BallAlignShoot());
         
         SmartDashboard.putData("CameraExposureDefault", new CameraExposureDefault());
         SmartDashboard.putData("CameraExposureTarget", new CameraExposureTarget());
@@ -163,6 +175,8 @@ public class OI {
         SmartDashboard.putData("ShooterIn", new ShooterInOut(0.5));
         SmartDashboard.putData("ShooterOut", new ShooterInOut(-0.5));
         SmartDashboard.putData("ShooterManual", new ShooterManual());
+        SmartDashboard.putData("CompressorEnabled", new ShooterEnableCompressor(true));
+        SmartDashboard.putData("CompressorDisabled", new ShooterEnableCompressor(false));
         
         SmartDashboard.putData("CannonReleaseOn", new CannonRelease(true));
         SmartDashboard.putData("CannonReleaseOff", new CannonRelease(false));
