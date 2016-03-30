@@ -2,6 +2,7 @@
 package org.usfirst.frc.team4947.robot;
 
 import org.usfirst.frc.team4947.robot.commands.AutoDoNothing;
+import org.usfirst.frc.team4947.robot.commands.AutoSimple;
 import org.usfirst.frc.team4947.robot.subsystems.Camera;
 import org.usfirst.frc.team4947.robot.subsystems.Cannon;
 import org.usfirst.frc.team4947.robot.subsystems.Climber;
@@ -40,12 +41,26 @@ public class Robot extends IterativeRobot {
     public static Camera camera;
     
     public static boolean testMode = false;
+    
+    private final static double FORWARD_SPEED = 0.5;
+    private final static double ROTATE_SPEED = 0.5;
+    
+    private final static double FORWARD_TIME_SHORT = 3.5;
+    private final static double FORWARD_TIME_LONG = 3.5;
+    
+    private final static double OBSTACLE_ANGLE_1 = 25.0;
+    private final static double OBSTACLE_ANGLE_2 = 15.0;
+    private final static double OBSTACLE_ANGLE_3 = 7.5;
+    private final static double OBSTACLE_ANGLE_4 = -5.0;
+    private final static double OBSTACLE_ANGLE_5 = -15;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	
+    	
     	driveTrain = new DriveTrain();
     	intake = new Intake();
     	lifter = new Lifter();
@@ -58,7 +73,13 @@ public class Robot extends IterativeRobot {
     	
         // Instantiate the command used for the autonomous period
         autonomousChooser.addDefault("DoNothing", new AutoDoNothing());
-        //autonomousChooser.addObject("AutonomousSimple", new AutonomousSimple());
+        autonomousChooser.addDefault("1 - LowBar", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_1, false, false, true, true));
+        autonomousChooser.addDefault("2 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true, true));
+        autonomousChooser.addDefault("2 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true, true));
+        autonomousChooser.addDefault("3 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_3, true, true, true, true));
+        autonomousChooser.addDefault("4 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_4, true, true, true, true));
+        autonomousChooser.addDefault("5 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true, true));
+        autonomousChooser.addDefault("5 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true, true));
         SmartDashboard.putData("AutoMode", autonomousChooser);
        
         // Show what command your subsystem is running on the SmartDashboard
