@@ -35,8 +35,8 @@ public class DriveTrain extends Subsystem {
 	private RobotDrive robotDrive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     public DriveTrain(){
-    	//robotDrive.setSafetyEnabled(true);
-    	robotDrive.setExpiration(0.250);
+    	robotDrive.setSafetyEnabled(false);
+    	//robotDrive.setExpiration(0.250);
     	
     	// TODO See if this works to calibrate the gyro
     	gyro.initGyro();
