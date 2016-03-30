@@ -24,12 +24,6 @@ public class DriveTrain extends Subsystem {
 	public CANTalon rearLeftMotor = new CANTalon(1);		// Encoder
 	public CANTalon frontLeftMotor = new CANTalon(8);
 		
-	// For test on mecanum base
-//	public Talon rearRightMotor = new Talon(8);
-//	public Talon frontRightMotor = new Talon(9);
-//	public Talon rearLeftMotor = new Talon(7);
-//	public Talon frontLeftMotor = new Talon(6);
-	
 	private RobotDrive robotDrive = new RobotDrive(frontLeftMotor, rearLeftMotor, frontRightMotor, rearRightMotor);
 
     public DriveTrain(){
@@ -71,8 +65,6 @@ public class DriveTrain extends Subsystem {
     	}
     	
     	robotDrive.arcadeDrive(moveValue, rotateValue);
-		// For test on mecanum base
-    	//robotDrive.arcadeDrive(-moveValue, -rotateValue);
     }
     
     public void tankDrive(double leftValue, double rightValue){

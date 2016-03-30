@@ -20,8 +20,6 @@ public class Lifter extends PIDSubsystem {
 	public final static int POSITION_CLIMB = 400000;
 	
     private CANTalon lifterMotor = new CANTalon(4);
-	// For test on mecanum base
-    //private CANTalon lifterMotor = new CANTalon(0);
 
 	public Lifter(){
     	super(4, 0, 0);

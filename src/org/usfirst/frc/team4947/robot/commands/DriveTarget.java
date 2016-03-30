@@ -36,8 +36,6 @@ public class DriveTarget extends Command {
 			rotateValue = 0;
 		}
 		
-		// For test on mecanum base
-		//Robot.driveTrain.tankDrive(rotateValue, -rotateValue);
 		Robot.driveTrain.tankDrive(-rotateValue, rotateValue);
     }
  
