@@ -32,6 +32,7 @@ public class CameraExposureDefault extends Command {
     protected void execute() {
     	try{
 	    	Robot.camera.getCamera().getImage(frame);
+//	    	Robot.camera.getCamera2().getImage(frame);
 	    	
 	        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(140, 120), new Point(180,  120), 250.0f);
 	        NIVision.imaqDrawLineOnImage(frame, frame, DrawMode.DRAW_VALUE, new Point(160, 100), new Point(160,  140), 250.0f);

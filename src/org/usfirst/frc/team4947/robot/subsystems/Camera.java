@@ -13,6 +13,7 @@ public class Camera extends Subsystem {
 	private final static double TARGET_ANGLE_TOLERANCE = 0.5;
 	
     private USBCamera USBCamera;
+//    private USBCamera USBCamera2;
     
     public double targetAngle = 0;
     public boolean targetFound = false;
@@ -22,10 +23,20 @@ public class Camera extends Subsystem {
     	try{
 	        USBCamera = new USBCamera("cam0");
 	        USBCamera.startCapture();
+//
+//			USBCamera.setExposureManual(0);
+//			USBCamera.setBrightness(0);
     	}
-    	catch(Exception e){
-    		
-    	}
+    	catch(Exception e){}
+    	
+//    	try{
+//	        USBCamera2 = new USBCamera("cam1");
+//	        USBCamera2.startCapture();
+//
+//       	USBCamera2.setExposureAuto();
+//    		USBCamera2.setBrightness(50);
+//    	}
+//    	catch(Exception e){}
     }
     
     public void initDefaultCommand() {
@@ -55,6 +66,10 @@ public class Camera extends Subsystem {
     public USBCamera getCamera(){
     	return USBCamera;
     }
+
+//    public USBCamera getCamera2(){
+//    	return USBCamera2;
+//    }
     
     public boolean isOnTarget(boolean canOvershoot){
     	double actualAngle = Robot.driveTrain.getAngle();
