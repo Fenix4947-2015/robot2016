@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.AllDown;
+import org.usfirst.frc.team4947.robot.commands.AllUp;
 import org.usfirst.frc.team4947.robot.commands.BallAlign;
 import org.usfirst.frc.team4947.robot.commands.BallAlignShoot;
 import org.usfirst.frc.team4947.robot.commands.BallPickUp;
@@ -120,11 +122,11 @@ public class OI {
 
         // TODO Link button state to execute commands
         driverA.whileHeld(new BallPickUp());
+        driverB.whileHeld(new BallAlignShoot());
         //driverB.whileHeld(new BallShoot());
         //driverX.whenPressed(new BallAlign());
-        driverX.whileHeld(new BallAlignShoot());
-        driverY.whenPressed(new LifterUpDown(1.0));
-        driverB.whenReleased(new CannonRelease(false));
+        driverX.whenPressed(new AllDown());
+        driverY.whenPressed(new AllUp());
         driverLB.whenPressed(new CannonPosition(false));
         driverRB.whenPressed(new CannonPosition(true));
         

@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class BallAlignShoot extends CommandGroup {
 	public BallAlignShoot() {
-		addSequential(new CannonPosition(true));
-		addSequential(new LifterUpDown(1.0));
+		addSequential(new AllUp());
 		
 		addSequential(new ShooterEnableCompressor(false));
     	addParallel(new ShooterStart(), 10.0);

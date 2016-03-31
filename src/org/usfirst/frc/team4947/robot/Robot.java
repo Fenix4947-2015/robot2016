@@ -46,6 +46,13 @@ public class Robot extends IterativeRobot {
     private final static double FORWARD_SPEED = 0.5;
     private final static double ROTATE_SPEED = 0.5;
     
+    private final static boolean IS_ALL_UP = true;
+    private final static boolean IS_ALL_DOWN = false;
+    private final static boolean IS_BALL_ALIGN = true;
+    private final static boolean IS_BALL_SHOOT = true;
+    private final static boolean IS_SHORT_DIST = true;
+    private final static boolean IS_LONG_DIST = false;
+    
     private final static double FORWARD_TIME_SHORT = 3.5;
     private final static double FORWARD_TIME_LONG = 3.5;
     
@@ -74,19 +81,19 @@ public class Robot extends IterativeRobot {
     	
         // Instantiate the command used for the autonomous period
         autonomousChooser.addDefault("DoNothing", new AutoDoNothing());
-        autonomousChooser.addDefault("1 - LowBar", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_1, false, false, true, true));
-        autonomousChooser.addDefault("2 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true, true));
-        autonomousChooser.addDefault("2 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true, true));
-        autonomousChooser.addDefault("2 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true));
-        autonomousChooser.addDefault("2 - ChevalLong", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_2, false, true, true));
-        autonomousChooser.addDefault("3 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_3, true, true, true, true));
-        autonomousChooser.addDefault("3 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_3, true, true, true));
-        autonomousChooser.addDefault("4 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_4, true, true, true, true));
-        autonomousChooser.addDefault("4 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_4, true, true, true));
-        autonomousChooser.addDefault("5 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true, true));
-        autonomousChooser.addDefault("5 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true, true));
-        autonomousChooser.addDefault("5 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true));
-        autonomousChooser.addDefault("5 - ChevalLong", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_5, false, true, true));
+        autonomousChooser.addDefault("1 - LowBar", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_1, IS_ALL_DOWN, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("2 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_2, IS_ALL_UP, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("2 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_2, IS_ALL_UP, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("2 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_2, IS_SHORT_DIST, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("2 - ChevalLong", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_2, IS_LONG_DIST, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("3 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_3, IS_ALL_UP, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("3 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_3, IS_SHORT_DIST, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("4 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_4, IS_ALL_UP, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("4 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_4, IS_SHORT_DIST, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("5 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_5, IS_ALL_UP, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("5 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_5, IS_ALL_UP, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("5 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_5, IS_SHORT_DIST, IS_BALL_ALIGN, IS_BALL_SHOOT));
+        autonomousChooser.addDefault("5 - ChevalLong", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_5, IS_LONG_DIST, IS_BALL_ALIGN, IS_BALL_SHOOT));
         SmartDashboard.putData("AutoMode", autonomousChooser);
        
         // Show what command your subsystem is running on the SmartDashboard

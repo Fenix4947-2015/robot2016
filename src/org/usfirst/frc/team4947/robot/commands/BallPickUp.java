@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class BallPickUp extends CommandGroup {
     
     public BallPickUp() {
-    	addParallel(new LifterUpDown(-1.0));
-    	addParallel(new CannonPosition(false));
+    	addParallel(new AllDown());
+    	addParallel(new CannonRelease(false));
     	addParallel(new IntakeInOut(0.75));
     	addParallel(new ShooterInOut(0.75));
     }

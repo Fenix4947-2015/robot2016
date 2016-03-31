@@ -6,15 +6,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoSimple extends CommandGroup {
-    public  AutoSimple(double forwardSpeed, double forwardTime, double rotateSpeed, double rotateAngle, boolean isLifterUp, boolean isCannonUp, boolean isBallAlign, boolean isBallShoot) {
-    	if(isLifterUp){
-    		addSequential(new LifterUpDown(1.0));
+    public  AutoSimple(double forwardSpeed, double forwardTime, double rotateSpeed, double rotateAngle, boolean isAllUp, boolean isBallAlign, boolean isBallShoot) {
+    	if(isAllUp){
+    		addSequential(new AllUp());
     	}
     	else{
-    		addSequential(new LifterUpDown(-1.0));
+    		addSequential(new AllDown());
     	}
-    	
-   		addSequential(new CannonPosition(isCannonUp));
    		
    		addSequential(new DriveForward(forwardSpeed), forwardTime);
    		addSequential(new DriveRotateAngle(rotateAngle, rotateSpeed, false));

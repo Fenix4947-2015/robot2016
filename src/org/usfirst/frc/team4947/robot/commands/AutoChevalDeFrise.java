@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class AutoChevalDeFrise extends CommandGroup {
     public  AutoChevalDeFrise(double rotateSpeed, double rotateAngle, boolean isShort, boolean isBallAlign, boolean isBallShoot) {
-   		addSequential(new LifterUpDown(1.0));
-   		addSequential(new CannonPosition(true));
+   		addSequential(new AllUp());
    		
    		// Move to the Cheval
    		addSequential(new DriveForward(0.5), 2.0);
