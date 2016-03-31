@@ -41,8 +41,7 @@ public class DriveTrain extends Subsystem {
     	
 		// Configure encoders
     	setPosition(0);
-    	//rearLeftMotor.changeControlMode(TalonControlMode.Position);
-		//rearLeftMotor.configEncoderCodesPerRev(10);
+		rearLeftMotor.configEncoderCodesPerRev(10);
     	
     	LiveWindow.addActuator("DriveTrain", "RearLeft", rearLeftMotor);
     	LiveWindow.addActuator("DriveTrain", "FrontLeft", frontLeftMotor);

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4947.robot;
 
+import org.usfirst.frc.team4947.robot.commands.AutoChevalDeFrise;
 import org.usfirst.frc.team4947.robot.commands.AutoDoNothing;
 import org.usfirst.frc.team4947.robot.commands.AutoSimple;
 import org.usfirst.frc.team4947.robot.subsystems.Camera;
@@ -76,10 +77,16 @@ public class Robot extends IterativeRobot {
         autonomousChooser.addDefault("1 - LowBar", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_1, false, false, true, true));
         autonomousChooser.addDefault("2 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true, true));
         autonomousChooser.addDefault("2 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true, true));
+        autonomousChooser.addDefault("2 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_2, true, true, true));
+        autonomousChooser.addDefault("2 - ChevalLong", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_2, false, true, true));
         autonomousChooser.addDefault("3 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_3, true, true, true, true));
+        autonomousChooser.addDefault("3 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_3, true, true, true));
         autonomousChooser.addDefault("4 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_4, true, true, true, true));
+        autonomousChooser.addDefault("4 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_4, true, true, true));
         autonomousChooser.addDefault("5 - StraightShort", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_SHORT, ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true, true));
         autonomousChooser.addDefault("5 - StraightLong", new AutoSimple(FORWARD_SPEED, FORWARD_TIME_LONG, ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true, true));
+        autonomousChooser.addDefault("5 - ChevalShort", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_5, true, true, true));
+        autonomousChooser.addDefault("5 - ChevalLong", new AutoChevalDeFrise(ROTATE_SPEED, OBSTACLE_ANGLE_5, false, true, true));
         SmartDashboard.putData("AutoMode", autonomousChooser);
        
         // Show what command your subsystem is running on the SmartDashboard
